@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Ofertas</title>
+        <h:outputStylesheet name="login.css" library="css" />
+        <h:outputStylesheet name="default.css" library="css" />
+    </h:head>
+    <h:body>
+        <div class="container">
+            <div class="card card-container">
+                <h:graphicImage library="images" name="avatar_2x.png" class="profile-img-card"/>
+                <h:form class="form-signin">
+                    <p:growl id="growl" sticky="true" showDetail="false" life="3000" />
+                    <h:outputLabel for="username" value="Usuario:" />
+                    <p:inputText id="username" value="#{loginBean.loginUsuario}" required="true" label="username" requiredMessage="El nombre de usuario es obligatorio." class="form-control"/>
+                    <h:outputLabel for="password" value="Contraseña:" />
+                    <p:password id="password" value="#{loginBean.passwordUsuario}" required="true" label="password" requiredMessage="La contraseña es obligatoria." class="form-control"/>
+                    <p:commandButton value="Ingresar" update="growl" action="#{loginBean.loginListener}" id="btnIngresar"/>
+                </h:form>
+                <h:form class="form-signin">
+                    <p:commandLink id="lknRegistro" actionListener="#{buttonView.buttonAction}">
+                        <h:outputText value="¿No posees cuenta?, regístrate aquí!" />
+                    </p:commandLink>
+                </h:form>
+            </div><!-- /card-container -->
+        </div><!-- /container -->
+    </h:body>
+</html>
+

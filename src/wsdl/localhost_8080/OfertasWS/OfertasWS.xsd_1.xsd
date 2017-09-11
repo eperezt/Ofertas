@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://ws.wsofertas.duoc.cl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://ws.wsofertas.duoc.cl/">
+
+<xs:element name="procesarLogin" type="tns:procesarLogin"/>
+
+<xs:element name="procesarLoginResponse" type="tns:procesarLoginResponse"/>
+
+<xs:complexType name="procesarLogin">
+<xs:sequence>
+<xs:element name="loginRequest" type="tns:loginRequestVO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loginRequestVO">
+<xs:sequence>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="username" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="procesarLoginResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:loginResponseVO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="loginResponseVO">
+<xs:sequence>
+<xs:element name="codigoRespuesta" type="xs:int"/>
+<xs:element name="codigoUsuario" type="xs:long"/>
+<xs:element name="respuesta" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
