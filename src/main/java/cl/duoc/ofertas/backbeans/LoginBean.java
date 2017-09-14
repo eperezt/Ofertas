@@ -61,7 +61,7 @@ public class LoginBean implements Serializable {
 
             loginRequest.setUsername(this.getLoginUsuario().trim());
             loginRequest.setPassword(this.getPasswordUsuario().trim());
-            // TODO process result here
+
             result = port.procesarLogin(loginRequest);
 
             if (result == null || result.getCodigoRespuesta() == Constantes.CODIGO_ERROR_GENERAL_WS) {
@@ -94,6 +94,26 @@ public class LoginBean implements Serializable {
             result = null;
         }
         return "";
+    }
+
+    public String logoutListener() {
+        try {
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+            session.invalidate();
+            this.setIsLogged(false);
+            this.setUsuarioSesionado(null);
+            return "/index";
+        } catch (Exception e) {
+            logger.error("Error grave procesando Logout.", e);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error grave al procesar Logout.", "Error grave procesando Logout.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("growl", message);
+            return "";
+        }
+    }
+    
+    public String irARegistroConsumidor(){
+        return "/pages/registro/registroConsumidor";
     }
 
     public String getLoginUsuario() {

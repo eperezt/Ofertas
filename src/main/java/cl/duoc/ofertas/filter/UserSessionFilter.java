@@ -51,7 +51,7 @@ public class UserSessionFilter implements Filter {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             String pathInfo = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
 
-            if ("/".equals(pathInfo) || pathInfo.contains("javax.faces.resource") || !pathInfo.startsWith("/faces") || pathInfo.contains("login.xhtml")) {
+            if ("/".equals(pathInfo) || pathInfo.contains("javax.faces.resource") || !pathInfo.startsWith("/faces") || pathInfo.contains("index.xhtml")) {
                 chain.doFilter(request, response);
             } else {
                 HttpSession httpSession = httpRequest.getSession();

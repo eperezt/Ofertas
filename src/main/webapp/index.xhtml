@@ -21,7 +21,7 @@
                     <p:commandButton value="Ingresar" update="growl" action="#{loginBean.loginListener}" id="btnIngresar"/>
                 </h:form>
                 <h:form class="form-signin">
-                    <p:commandLink id="lknRegistro" actionListener="#{buttonView.buttonAction}">
+                    <p:commandLink id="lknRegistro" action="#{loginBean.irARegistroConsumidor}">
                         <h:outputText value="¿No posees cuenta?, regístrate aquí!" />
                     </p:commandLink>
                 </h:form>
