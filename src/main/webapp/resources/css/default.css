@@ -9,5 +9,6 @@ and open the template in the editor.
 */
 .ui-widget,
 .ui-widget .ui-widget {
-    font-size: 12px !important;
+    font-size: 16px !important;
+    font-family: sans-serif;
 }

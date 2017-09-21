@@ -18,6 +18,8 @@ body, html {
     height: 100%;
     background-repeat: no-repeat;
     background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
+    font-family: sans-serif !important;
+    font-size: 16px !important;
 }
 
 .card-container.card {
@@ -26,6 +28,7 @@ body, html {
 }
 
 .btn {
+    font-family: sans-serif;
     font-weight: 700;
     height: 36px;
     -moz-user-select: none;
