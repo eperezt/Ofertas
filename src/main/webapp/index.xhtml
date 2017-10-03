@@ -23,9 +23,9 @@
                     <p:password id="password" value="#{loginBean.passwordUsuario}" required="true" label="password" requiredMessage="La contraseña es obligatoria." class="form-control"/>
                     <p:commandButton value="Ingresar" update="growl" action="#{loginBean.loginListener}" id="btnIngresar"/>
                 </h:form>
-                <h:form class="form-signin">
+                <h:form class="form-signin">¿No posees cuenta?, 
                     <p:commandLink id="lknRegistro" action="#{loginBean.irARegistroConsumidor}">
-                        <h:outputText value="¿No posees cuenta?, regístrate aquí!" />
+                        <h:outputText value="Regístrate aquí!" />
                     </p:commandLink>
                 </h:form>
             </div><!-- /card-container -->
