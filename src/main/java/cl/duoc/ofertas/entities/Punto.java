@@ -53,7 +53,7 @@ public class Punto implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     @Column(name = "ISCOBRADO")
-    private Short iscobrado;
+    private BigInteger iscobrado;
     @JoinColumn(name = "USUARIO_IDUSUARIO", referencedColumnName = "IDUSUARIO")
     @ManyToOne
     private Usuario usuarioIdusuario;
@@ -94,11 +94,11 @@ public class Punto implements Serializable {
         this.fecha = fecha;
     }
 
-    public Short getIscobrado() {
+    public BigInteger getIscobrado() {
         return iscobrado;
     }
 
-    public void setIscobrado(Short iscobrado) {
+    public void setIscobrado(BigInteger iscobrado) {
         this.iscobrado = iscobrado;
     }
 

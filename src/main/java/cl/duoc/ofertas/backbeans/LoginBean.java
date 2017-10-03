@@ -74,7 +74,7 @@ public class LoginBean implements Serializable {
                 } else {
                     Usuario usuarioLogin = usuarioFacade.find(new BigDecimal(result.getCodigoUsuario()));
 
-                    if (usuarioLogin.getIsactivo() == 0) {
+                    if (usuarioLogin.getIsactivo().intValue() == 0) {
                         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: El Usuario se encuentra inactivo.", "Error: El Usuario se encuentra inactivo.");
                         context.addMessage("growl", message);
                         return "";

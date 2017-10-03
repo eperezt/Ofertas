@@ -89,7 +89,7 @@ public class Trabajador implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
     @Column(name = "ISACTIVO")
-    private Short isactivo;
+    private BigInteger isactivo;
     @ManyToMany(mappedBy = "trabajadorList")
     private List<Tienda> tiendaList;
     @JoinColumn(name = "CIUDAD_IDCIUDAD", referencedColumnName = "IDCIUDAD")
@@ -194,11 +194,11 @@ public class Trabajador implements Serializable {
         this.fechamodificacion = fechamodificacion;
     }
 
-    public Short getIsactivo() {
+    public BigInteger getIsactivo() {
         return isactivo;
     }
 
-    public void setIsactivo(Short isactivo) {
+    public void setIsactivo(BigInteger isactivo) {
         this.isactivo = isactivo;
     }
 

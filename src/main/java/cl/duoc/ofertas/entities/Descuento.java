@@ -53,11 +53,11 @@ public class Descuento implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @Column(name = "ISPORCENTAJE")
-    private Short isporcentaje;
+    private BigInteger isporcentaje;
     @Column(name = "PORCENTAJEDESCUENTO")
     private BigDecimal porcentajedescuento;
     @Column(name = "ISPRECIODIRECTO")
-    private Short ispreciodirecto;
+    private BigInteger ispreciodirecto;
     @Column(name = "PRECIODESCUENTO")
     private BigInteger preciodescuento;
     @JoinColumn(name = "PRODUCTO_IDPRODUCTO", referencedColumnName = "IDPRODUCTO")
@@ -95,11 +95,11 @@ public class Descuento implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Short getIsporcentaje() {
+    public BigInteger getIsporcentaje() {
         return isporcentaje;
     }
 
-    public void setIsporcentaje(Short isporcentaje) {
+    public void setIsporcentaje(BigInteger isporcentaje) {
         this.isporcentaje = isporcentaje;
     }
 
@@ -111,11 +111,11 @@ public class Descuento implements Serializable {
         this.porcentajedescuento = porcentajedescuento;
     }
 
-    public Short getIspreciodirecto() {
+    public BigInteger getIspreciodirecto() {
         return ispreciodirecto;
     }
 
-    public void setIspreciodirecto(Short ispreciodirecto) {
+    public void setIspreciodirecto(BigInteger ispreciodirecto) {
         this.ispreciodirecto = ispreciodirecto;
     }
 

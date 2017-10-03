@@ -68,7 +68,7 @@ public class Oferta implements Serializable {
     @Column(name = "MAXIMOPRODUCTOS")
     private BigInteger maximoproductos;
     @Column(name = "ISPUBLICADA")
-    private Short ispublicada;
+    private BigInteger ispublicada;
     @JoinTable(name = "RL_OFERTA_TIENDA", joinColumns = {
         @JoinColumn(name = "OFERTA_IDOFERTA", referencedColumnName = "IDOFERTA")}, inverseJoinColumns = {
         @JoinColumn(name = "TIENDA_IDTIENDA", referencedColumnName = "IDTIENDA")})
@@ -137,11 +137,11 @@ public class Oferta implements Serializable {
         this.maximoproductos = maximoproductos;
     }
 
-    public Short getIspublicada() {
+    public BigInteger getIspublicada() {
         return ispublicada;
     }
 
-    public void setIspublicada(Short ispublicada) {
+    public void setIspublicada(BigInteger ispublicada) {
         this.ispublicada = ispublicada;
     }
 

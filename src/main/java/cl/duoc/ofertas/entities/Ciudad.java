@@ -7,6 +7,7 @@ package cl.duoc.ofertas.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -46,7 +47,7 @@ public class Ciudad implements Serializable {
     @Column(name = "NOMBRE")
     private String nombre;
     @Column(name = "ISACTIVO")
-    private Short isactivo;
+    private BigInteger isactivo;
     @OneToMany(mappedBy = "ciudadIdciudad")
     private List<Consumidor> consumidorList;
     @OneToMany(mappedBy = "ciudadIdciudad")
@@ -77,11 +78,11 @@ public class Ciudad implements Serializable {
         this.nombre = nombre;
     }
 
-    public Short getIsactivo() {
+    public BigInteger getIsactivo() {
         return isactivo;
     }
 
-    public void setIsactivo(Short isactivo) {
+    public void setIsactivo(BigInteger isactivo) {
         this.isactivo = isactivo;
     }
 

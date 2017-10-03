@@ -7,6 +7,7 @@ package cl.duoc.ofertas.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -19,7 +20,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -64,7 +64,7 @@ public class Tienda implements Serializable {
     @Column(name = "TELEFONO")
     private String telefono;
     @Column(name = "ISACTIVO")
-    private Short isactivo;
+    private BigInteger isactivo;
     @Column(name = "FECHACREACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
@@ -76,6 +76,8 @@ public class Tienda implements Serializable {
     private String empresa;
     @ManyToMany(mappedBy = "tiendaList")
     private List<Oferta> ofertaList;
+    @ManyToMany(mappedBy = "tiendaList")
+    private List<Producto> productoList;
     @JoinTable(name = "RL_TRAB_TIENDA", joinColumns = {
         @JoinColumn(name = "TIENDA_IDTIENDA", referencedColumnName = "IDTIENDA")}, inverseJoinColumns = {
         @JoinColumn(name = "TRABAJADOR_IDTRABAJADOR", referencedColumnName = "IDTRABAJADOR")})
@@ -84,8 +86,6 @@ public class Tienda implements Serializable {
     @JoinColumn(name = "CIUDAD_IDCIUDAD", referencedColumnName = "IDCIUDAD")
     @ManyToOne
     private Ciudad ciudadIdciudad;
-    @OneToMany(mappedBy = "tiendaIdtienda")
-    private List<Producto> productoList;
 
     public Tienda() {
     }
@@ -126,11 +126,11 @@ public class Tienda implements Serializable {
         this.telefono = telefono;
     }
 
-    public Short getIsactivo() {
+    public BigInteger getIsactivo() {
         return isactivo;
     }
 
-    public void setIsactivo(Short isactivo) {
+    public void setIsactivo(BigInteger isactivo) {
         this.isactivo = isactivo;
     }
 
@@ -168,6 +168,15 @@ public class Tienda implements Serializable {
     }
 
     @XmlTransient
+    public List<Producto> getProductoList() {
+        return productoList;
+    }
+
+    public void setProductoList(List<Producto> productoList) {
+        this.productoList = productoList;
+    }
+
+    @XmlTransient
     public List<Trabajador> getTrabajadorList() {
         return trabajadorList;
     }
@@ -182,15 +191,6 @@ public class Tienda implements Serializable {
 
     public void setCiudadIdciudad(Ciudad ciudadIdciudad) {
         this.ciudadIdciudad = ciudadIdciudad;
-    }
-
-    @XmlTransient
-    public List<Producto> getProductoList() {
-        return productoList;
-    }
-
-    public void setProductoList(List<Producto> productoList) {
-        this.productoList = productoList;
     }
 
     @Override

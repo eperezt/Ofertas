@@ -80,7 +80,7 @@ public class Consumidor implements Serializable {
     @Column(name = "EMAIL")
     private String email;
     @Column(name = "ISACTIVO")
-    private Short isactivo;
+    private BigInteger isactivo;
     @Column(name = "FECHACREACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
@@ -88,7 +88,7 @@ public class Consumidor implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
     @Column(name = "ISRECIBEOFERTAS")
-    private Short isrecibeofertas;
+    private BigInteger isrecibeofertas;
     @JoinColumn(name = "CIUDAD_IDCIUDAD", referencedColumnName = "IDCIUDAD")
     @ManyToOne
     private Ciudad ciudadIdciudad;
@@ -175,11 +175,11 @@ public class Consumidor implements Serializable {
         this.email = email;
     }
 
-    public Short getIsactivo() {
+    public BigInteger getIsactivo() {
         return isactivo;
     }
 
-    public void setIsactivo(Short isactivo) {
+    public void setIsactivo(BigInteger isactivo) {
         this.isactivo = isactivo;
     }
 
@@ -199,11 +199,11 @@ public class Consumidor implements Serializable {
         this.fechamodificacion = fechamodificacion;
     }
 
-    public Short getIsrecibeofertas() {
+    public BigInteger getIsrecibeofertas() {
         return isrecibeofertas;
     }
 
-    public void setIsrecibeofertas(Short isrecibeofertas) {
+    public void setIsrecibeofertas(BigInteger isrecibeofertas) {
         this.isrecibeofertas = isrecibeofertas;
     }
 

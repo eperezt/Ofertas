@@ -65,7 +65,7 @@ public class Cupon implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechafinvigencia;
     @Column(name = "ISUTILIZADO")
-    private Short isutilizado;
+    private BigInteger isutilizado;
     @JoinTable(name = "RL_RUBRO_CUPON", joinColumns = {
         @JoinColumn(name = "CUPON_IDCUPON", referencedColumnName = "IDCUPON")}, inverseJoinColumns = {
         @JoinColumn(name = "RUBRO_IDRUBRO", referencedColumnName = "IDRUBRO")})
@@ -130,11 +130,11 @@ public class Cupon implements Serializable {
         this.fechafinvigencia = fechafinvigencia;
     }
 
-    public Short getIsutilizado() {
+    public BigInteger getIsutilizado() {
         return isutilizado;
     }
 
-    public void setIsutilizado(Short isutilizado) {
+    public void setIsutilizado(BigInteger isutilizado) {
         this.isutilizado = isutilizado;
     }
 

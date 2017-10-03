@@ -9,12 +9,15 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,6 +28,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -62,26 +66,28 @@ public class Producto implements Serializable {
     @Column(name = "PRECIO")
     private BigInteger precio;
     @Column(name = "ISDOSPORUNO")
-    private Short isdosporuno;
+    private BigInteger isdosporuno;
     @Size(max = 100)
     @Column(name = "SKU")
     private String sku;
     @Column(name = "ISACTIVO")
-    private Short isactivo;
+    private BigInteger isactivo;
     @Column(name = "FECHACREACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
     @Column(name = "FECHAMODIFICACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
+    @JoinTable(name = "RL_PROD_TIENDA", joinColumns = {
+        @JoinColumn(name = "PRODUCTO_IDPRODUCTO", referencedColumnName = "IDPRODUCTO")}, inverseJoinColumns = {
+        @JoinColumn(name = "TIENDA_IDTIENDA", referencedColumnName = "IDTIENDA")})
+    @ManyToMany
+    private List<Tienda> tiendaList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "productoIdproducto")
     private Descuento descuento;
     @JoinColumn(name = "RUBRO_IDRUBRO", referencedColumnName = "IDRUBRO")
     @ManyToOne
     private Rubro rubroIdrubro;
-    @JoinColumn(name = "TIENDA_IDTIENDA", referencedColumnName = "IDTIENDA")
-    @ManyToOne
-    private Tienda tiendaIdtienda;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "productoIdproducto")
     private Oferta oferta;
 
@@ -124,11 +130,11 @@ public class Producto implements Serializable {
         this.precio = precio;
     }
 
-    public Short getIsdosporuno() {
+    public BigInteger getIsdosporuno() {
         return isdosporuno;
     }
 
-    public void setIsdosporuno(Short isdosporuno) {
+    public void setIsdosporuno(BigInteger isdosporuno) {
         this.isdosporuno = isdosporuno;
     }
 
@@ -140,11 +146,11 @@ public class Producto implements Serializable {
         this.sku = sku;
     }
 
-    public Short getIsactivo() {
+    public BigInteger getIsactivo() {
         return isactivo;
     }
 
-    public void setIsactivo(Short isactivo) {
+    public void setIsactivo(BigInteger isactivo) {
         this.isactivo = isactivo;
     }
 
@@ -164,6 +170,15 @@ public class Producto implements Serializable {
         this.fechamodificacion = fechamodificacion;
     }
 
+    @XmlTransient
+    public List<Tienda> getTiendaList() {
+        return tiendaList;
+    }
+
+    public void setTiendaList(List<Tienda> tiendaList) {
+        this.tiendaList = tiendaList;
+    }
+
     public Descuento getDescuento() {
         return descuento;
     }
@@ -178,14 +193,6 @@ public class Producto implements Serializable {
 
     public void setRubroIdrubro(Rubro rubroIdrubro) {
         this.rubroIdrubro = rubroIdrubro;
-    }
-
-    public Tienda getTiendaIdtienda() {
-        return tiendaIdtienda;
-    }
-
-    public void setTiendaIdtienda(Tienda tiendaIdtienda) {
-        this.tiendaIdtienda = tiendaIdtienda;
     }
 
     public Oferta getOferta() {

@@ -7,12 +7,15 @@ package cl.duoc.ofertas.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -55,14 +58,17 @@ public class Funcionalidad implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
     @Column(name = "ISACTIVO")
-    private Short isactivo;
+    private BigInteger isactivo;
     @Column(name = "FECHACREACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
     @Column(name = "FECHAMODIFICACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    @ManyToMany(mappedBy = "funcionalidadList")
+    @JoinTable(name = "RL_FUNC_PERFIL", joinColumns = {
+        @JoinColumn(name = "FUNCIONALIDAD_IDFUNCIONALIDAD", referencedColumnName = "IDFUNCIONALIDAD")}, inverseJoinColumns = {
+        @JoinColumn(name = "PERFIL_IDPERFIL", referencedColumnName = "IDPERFIL")})
+    @ManyToMany
     private List<Perfil> perfilList;
 
     public Funcionalidad() {
@@ -96,11 +102,11 @@ public class Funcionalidad implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Short getIsactivo() {
+    public BigInteger getIsactivo() {
         return isactivo;
     }
 
-    public void setIsactivo(Short isactivo) {
+    public void setIsactivo(BigInteger isactivo) {
         this.isactivo = isactivo;
     }
 
