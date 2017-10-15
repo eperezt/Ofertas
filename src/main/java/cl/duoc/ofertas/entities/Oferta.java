@@ -16,6 +16,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,7 +26,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -41,7 +41,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Oferta.findByIdoferta", query = "SELECT o FROM Oferta o WHERE o.idoferta = :idoferta")
     , @NamedQuery(name = "Oferta.findByFechainicio", query = "SELECT o FROM Oferta o WHERE o.fechainicio = :fechainicio")
     , @NamedQuery(name = "Oferta.findByFechafin", query = "SELECT o FROM Oferta o WHERE o.fechafin = :fechafin")
-    , @NamedQuery(name = "Oferta.findByRutafoto", query = "SELECT o FROM Oferta o WHERE o.rutafoto = :rutafoto")
     , @NamedQuery(name = "Oferta.findByMinimoproductos", query = "SELECT o FROM Oferta o WHERE o.minimoproductos = :minimoproductos")
     , @NamedQuery(name = "Oferta.findByMaximoproductos", query = "SELECT o FROM Oferta o WHERE o.maximoproductos = :maximoproductos")
     , @NamedQuery(name = "Oferta.findByIspublicada", query = "SELECT o FROM Oferta o WHERE o.ispublicada = :ispublicada")})
@@ -60,9 +59,9 @@ public class Oferta implements Serializable {
     @Column(name = "FECHAFIN")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechafin;
-    @Size(max = 255)
-    @Column(name = "RUTAFOTO")
-    private String rutafoto;
+    @Lob
+    @Column(name = "FOTOGRAFIA")
+    private Serializable fotografia;
     @Column(name = "MINIMOPRODUCTOS")
     private BigInteger minimoproductos;
     @Column(name = "MAXIMOPRODUCTOS")
@@ -113,12 +112,12 @@ public class Oferta implements Serializable {
         this.fechafin = fechafin;
     }
 
-    public String getRutafoto() {
-        return rutafoto;
+    public Serializable getFotografia() {
+        return fotografia;
     }
 
-    public void setRutafoto(String rutafoto) {
-        this.rutafoto = rutafoto;
+    public void setFotografia(Serializable fotografia) {
+        this.fotografia = fotografia;
     }
 
     public BigInteger getMinimoproductos() {

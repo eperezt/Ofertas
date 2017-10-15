@@ -16,7 +16,7 @@
                 <h:form class="form-signin">
                     <p:growl id="growl" sticky="true" showDetail="false" life="3000" />
                     <h:outputLabel for="username" value="Usuario:" />
-                    <p:inputText id="username" value="#{loginBean.loginUsuario}" required="true" label="username" requiredMessage="El nombre de usuario es obligatorio." class="form-control">
+                    <p:inputText id="username" value="#{loginBean.loginUsuario}" required="true" label="username" requiredMessage="El nombre de usuario es obligatorio." class="form-control" style="text-transform: uppercase">
                         <p:keyFilter regEx="/[a-z0-9_.]/i"/>
                     </p:inputText>
                     <h:outputLabel for="password" value="Contraseña:" />

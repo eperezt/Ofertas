@@ -59,7 +59,7 @@ public class LoginBean implements Serializable {
 
             loginRequest = new LoginRequestVO();
 
-            loginRequest.setUsername(this.getLoginUsuario().trim());
+            loginRequest.setUsername(this.getLoginUsuario().trim().toUpperCase());
             loginRequest.setPassword(this.getPasswordUsuario().trim());
 
             result = port.procesarLogin(loginRequest);

@@ -41,7 +41,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Funcionalidad.findByDescripcion", query = "SELECT f FROM Funcionalidad f WHERE f.descripcion = :descripcion")
     , @NamedQuery(name = "Funcionalidad.findByIsactivo", query = "SELECT f FROM Funcionalidad f WHERE f.isactivo = :isactivo")
     , @NamedQuery(name = "Funcionalidad.findByFechacreacion", query = "SELECT f FROM Funcionalidad f WHERE f.fechacreacion = :fechacreacion")
-    , @NamedQuery(name = "Funcionalidad.findByFechamodificacion", query = "SELECT f FROM Funcionalidad f WHERE f.fechamodificacion = :fechamodificacion")})
+    , @NamedQuery(name = "Funcionalidad.findByFechamodificacion", query = "SELECT f FROM Funcionalidad f WHERE f.fechamodificacion = :fechamodificacion")
+    , @NamedQuery(name = "Funcionalidad.findByIsweb", query = "SELECT f FROM Funcionalidad f WHERE f.isweb = :isweb")
+    , @NamedQuery(name = "Funcionalidad.findByIsescritorio", query = "SELECT f FROM Funcionalidad f WHERE f.isescritorio = :isescritorio")})
 public class Funcionalidad implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -65,6 +67,10 @@ public class Funcionalidad implements Serializable {
     @Column(name = "FECHAMODIFICACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
+    @Column(name = "ISWEB")
+    private BigInteger isweb;
+    @Column(name = "ISESCRITORIO")
+    private BigInteger isescritorio;
     @JoinTable(name = "RL_FUNC_PERFIL", joinColumns = {
         @JoinColumn(name = "FUNCIONALIDAD_IDFUNCIONALIDAD", referencedColumnName = "IDFUNCIONALIDAD")}, inverseJoinColumns = {
         @JoinColumn(name = "PERFIL_IDPERFIL", referencedColumnName = "IDPERFIL")})
@@ -124,6 +130,22 @@ public class Funcionalidad implements Serializable {
 
     public void setFechamodificacion(Date fechamodificacion) {
         this.fechamodificacion = fechamodificacion;
+    }
+
+    public BigInteger getIsweb() {
+        return isweb;
+    }
+
+    public void setIsweb(BigInteger isweb) {
+        this.isweb = isweb;
+    }
+
+    public BigInteger getIsescritorio() {
+        return isescritorio;
+    }
+
+    public void setIsescritorio(BigInteger isescritorio) {
+        this.isescritorio = isescritorio;
     }
 
     @XmlTransient

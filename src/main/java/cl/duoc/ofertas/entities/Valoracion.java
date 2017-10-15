@@ -15,6 +15,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -36,7 +37,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Valoracion.findAll", query = "SELECT v FROM Valoracion v")
     , @NamedQuery(name = "Valoracion.findByIdvaloracion", query = "SELECT v FROM Valoracion v WHERE v.idvaloracion = :idvaloracion")
-    , @NamedQuery(name = "Valoracion.findByLinkfoto", query = "SELECT v FROM Valoracion v WHERE v.linkfoto = :linkfoto")
     , @NamedQuery(name = "Valoracion.findByNota", query = "SELECT v FROM Valoracion v WHERE v.nota = :nota")
     , @NamedQuery(name = "Valoracion.findByDetalle", query = "SELECT v FROM Valoracion v WHERE v.detalle = :detalle")
     , @NamedQuery(name = "Valoracion.findByFechacreacion", query = "SELECT v FROM Valoracion v WHERE v.fechacreacion = :fechacreacion")})
@@ -49,9 +49,9 @@ public class Valoracion implements Serializable {
     @NotNull
     @Column(name = "IDVALORACION")
     private BigDecimal idvaloracion;
-    @Size(max = 255)
-    @Column(name = "LINKFOTO")
-    private String linkfoto;
+    @Lob
+    @Column(name = "FOTOGRAFIA")
+    private Serializable fotografia;
     @Column(name = "NOTA")
     private BigInteger nota;
     @Size(max = 255)
@@ -87,12 +87,12 @@ public class Valoracion implements Serializable {
         this.idvaloracion = idvaloracion;
     }
 
-    public String getLinkfoto() {
-        return linkfoto;
+    public Serializable getFotografia() {
+        return fotografia;
     }
 
-    public void setLinkfoto(String linkfoto) {
-        this.linkfoto = linkfoto;
+    public void setFotografia(Serializable fotografia) {
+        this.fotografia = fotografia;
     }
 
     public BigInteger getNota() {
