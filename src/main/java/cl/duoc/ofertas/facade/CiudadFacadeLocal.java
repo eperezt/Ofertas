@@ -30,4 +30,6 @@ public interface CiudadFacadeLocal {
 
     int count();
     
+    public List<Ciudad> getCiudadesActivas();
+    
 }

@@ -6,6 +6,7 @@
 package cl.duoc.ofertas.facade;
 
 import cl.duoc.ofertas.entities.Consumidor;
+import cl.duoc.ofertas.entities.Usuario;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,4 +31,5 @@ public interface ConsumidorFacadeLocal {
 
     int count();
     
+    public void crearConsumidorUsuario(Usuario usuario, Consumidor consumidor);
 }

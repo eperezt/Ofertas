@@ -152,3 +152,20 @@ body, html {
 .forgot-password:focus{
     color: rgb(12, 97, 33);
 }
+
+::-webkit-input-placeholder {
+	color: gray !important;
+	font-weight: normal !important;
+}
+
+/** firefox **/
+:-moz-placeholder {
+	color: gray !important;
+	font-weight: normal !important;
+}
+
+/** IE **/
+.ui-watermark {
+	color: gray !important;
+	font-weight: normal !important;
+}
