@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="/pages/templates/commonLayout.xhtml">
+            <ui:define name="content">
+                <p:layout>
+                    <p:layoutUnit position="west" resizable="false" size="210" minSize="200" maxSize="350">
+                        <h:form>  
+                            <p:growl id="messages" showDetail="false"/>
+                            <h2 style="margin-top:20">Menu</h2>
+                            <p:menu>
+                                <p:menuitem value="Lista de ofertas"            outcome="/pages/home/home"                  update="messages"/>
+                                <p:menuitem value="Tus Puntos"                  outcome="/pages/consumidor/puntos"          update="messages"/>
+                                <p:menuitem value="Cupón de descuento"          outcome="/pages/consumidor/cuponDescuento"  update="messages"/>
+                            </p:menu>
+                        </h:form>
+                    </p:layoutUnit>
+                    <p:layoutUnit position="center">
+                        <div>
+                            <h2>Tus puntos acumulados</h2>
+                            <p>Actualmente posees: puntos acumulados.</p>
+                            <p>Para canjear tus puntos, imprime tu cupón de descuento y muéstralo en tu tienda asociada.</p>
+                        </div>
+                    </p:layoutUnit>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+
+
+        <!--Error en la descarga. Se debería iniciar dlgErrorDescargaCupon mediante respuesta back bean.-->
+        <!--        <p:dialog header="Error en la descarga de cupon" widgetVar="dlgErrorDescargaCupon" modal="true" width="30%" height="40%" closeOnEscape="true" maximizable="false" minimizable="false" resizable="false">
+        <div>
+                    <h:form>
+                        <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder">
+                            <h2>Aviso</h2>
+                            <h3>Tuvimos un problema generando tu cupón, por favor intenta más tarde.</h3>
+                            <p:commandButton value="Aceptar" type="button" onclick="PF('dlgErrorDescargaCupon').hide();" id="btnAceptarErrorDescargaCupon"/>
+                        </p:panelGrid>
+                    </h:form>
+        </div>
+                </p:dialog>  -->
+    </h:body>
+</html>
