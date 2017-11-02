@@ -40,7 +40,7 @@ public class CiudadFacade extends AbstractFacade<Ciudad> implements CiudadFacade
         Query query = null;
         List<Ciudad> listaCiudades = null;
         try {
-            query = em.createQuery("SELECT m FROM Ciudad m WHERE m.isactivo = 1", Ciudad.class);
+            query = em.createQuery("SELECT m FROM Ciudad m WHERE m.isactivo = 1 ORDER BY m.nombre ASC", Ciudad.class);
             listaCiudades = (List<Ciudad>) query.getResultList();
             return listaCiudades;
         } catch (NoResultException e) {

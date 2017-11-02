@@ -90,6 +90,13 @@ public class RegistroConsumidorBean implements Serializable {
                     return;
                 }
 
+                if (this.getRut().split("-").length < 2) {
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: El formato del Rut no es correcto.", "Error: El formato del Rut no es correcto.");
+                    //FacesContext context = FacesContext.getCurrentInstance();
+                    context.addMessage("growl", message);
+                    return;
+                }
+
                 Consumidor nuevoConsumidor = new Consumidor();
                 nuevoConsumidor.setNombre(this.getNombre().trim());
                 nuevoConsumidor.setApellidopaterno(this.getApellidoPaterno().trim());
@@ -130,7 +137,7 @@ public class RegistroConsumidorBean implements Serializable {
                 context.addMessage("growl", message);
 
                 RequestContext.getCurrentInstance().execute("PF('dlgRegistro').hide();");
-                
+
                 this.limpiarFormulario();
             }
         } catch (Exception e) {
