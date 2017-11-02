@@ -9,7 +9,8 @@ and open the template in the editor.
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:body>
         <ui:composition template="/pages/templates/commonLayout.xhtml">
             <ui:define name="content">
@@ -52,58 +53,45 @@ and open the template in the editor.
                                     </h:panelGrid>
                                 </p:panel>
                             </h:form>
-
-<!--                            <h:form class="form-signin">
-                                <p:commandLink id="lknRegistro" onclick="PF('dlgValorar').show();">
-                                    <h:outputText value="Valora tu oferta: obtén descuentos." />
-                                </p:commandLink>
-                            </h:form>-->
                         </div>
 
-<!--                        <p:repeat value="#{homeBean.listaOfertas}" var="car">
-                            <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                                <p:commandLink update=":form:carDetail" oncomplete="PF('carDialog').show()">
-                                    <f:setPropertyActionListener value="#{car}" target="#{dataListView.selectedCar}" />
-                                    <p:graphicImage name="demo/images/car/#{car.brand}-big.gif" /> 
-                                </p:commandLink>
 
-                                <p:outputPanel>
-                                    <h:panelGrid columns="2" cellpadding="5">
-                                        <h:outputText value="Id:" />
-                                        <h:outputText value="#{car.id}" style="font-weight: bold"/>
-
-                                        <h:outputText value="Year:" />
-                                        <h:outputText value="#{car.year}" style="font-weight: bold"/>
-
-                                        <h:outputText value="Color:" />
-                                        <h:outputText value="#{car.color}" style="font-weight: bold"/>
-                                    </h:panelGrid>
-                                </p:outputPanel>
-                            </h:panelGrid>
-                        </p:repeat>-->
-
-                        <ui:repeat var="oferta" value="#{homeBean.listaOfertas}">
-                            <h2>#{oferta.productoIdproducto.nombre}</h2>
-                            <h:graphicImage value = "#{oferta.fotografia}"/>
+<!--                        <ui:repeat var="oferta" value="#{homeBean.listaOfertas}">
+                            <h2>#{oferta.idoferta}</h2>
+                            <p:graphicImage value="#{oferta.image}"/>
+                                <f:param name="idoferta" value="#{oferta.idoferta}" />
+                            </p:graphicImage>
                             <p:galleria value="#{oferta.fotografia}" var="image" panelWidth="500" panelHeight="313" showCaption="true">
                                 <p:graphicImage name="demo/images/nature/#{image}" alt="Image Description for #{image}" title="#{image}"/>
                             </p:galleria>
-                        </ui:repeat>
+                        </ui:repeat>-->
+                        <p:dataGrid var="oferta" value="#{homeBean.listaOfertas}" columns="3" layout="grid"
+                                    rows="4" paginator="true" style="margin-top:20px">
+                            <f:facet name="header">
+                                Ofertas
+                            </f:facet>
+                            <p:panel header="#{oferta.productoIdproducto.nombre}" style="text-align:center">
+                                <h:panelGrid columns="1" style="width:100%">
+                                    <p:graphicImage library="images" name="testimage.jpg"/>
+                                    <h:outputText value="#{oferta.fechainicio} - #{oferta.fechafin}" />
+                                    <h:outputText value="Minimo: #{oferta.minimoproductos}" />
+                                    <h:outputText value="Máximo: #{oferta.maximoproductos}" />
+                                </h:panelGrid>
+                            </p:panel>
 
-                        <div class="container">
-                            <h:panelGrid id = "panel" columns = "3" border = "1" cellpadding = "10" cellspacing = "1">
+                        </p:dataGrid>
+
+<!--                        <div class="container">
+                            <h:panelGrid id = "panel" columns = "3" border = "1" cellpadding = "100" cellspacing = "1">
 
                                 <f:facet name = "header">
-                                    <!--                            <h:outputText value = "Login"/>-->
+                                    <h:outputText value = "OFERTAS"/>
                                 </f:facet>
-
-                                <f:facet name = "footer">
-                                    <!--                            <h:panelGroup style = "display:block; text-align:center">
-                                                                    <h:commandButton id = "submit" value = "Submit" />
-                                                                </h:panelGroup>-->
-                                </f:facet>
+                                <c:forEach items="#{homeBean.listaOfertas}" var="oferta">
+                                    <h2>#{oferta.idoferta}</h2>
+                                </c:forEach>
                             </h:panelGrid>
-                        </div>
+                        </div>-->
                     </p:layoutUnit>
                 </p:layout>                
             </ui:define>

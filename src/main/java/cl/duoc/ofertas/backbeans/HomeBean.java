@@ -114,24 +114,24 @@ public class HomeBean implements Serializable {
         return (List<Tienda>) lista;
     }
 
-    public List<String> listarEmpresas() {
-        ArrayList listaEmpresas = null;
-        try {
-            listaEmpresas = new ArrayList();
-            for (Tienda tienda : this.getTiendas()) {
-                listaEmpresas.add(tienda.getEmpresa());
-            }
-            if (listaEmpresas.size() == 0) {
-                throw new Exception("lista vacia.");
-            }
-        } catch (Exception e) {
-            logger.error("Error listando empresas mediante lista de tiendas: ", e);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error listando empresas mediante lista de tiendas: ", "Error grave obteniendo empresas de tiendas.");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("growl", message);
-        }
-        return listaEmpresas;
-    }
+//    public List<String> listarEmpresas() {
+//        ArrayList listaEmpresas = null;
+//        try {
+//            listaEmpresas = new ArrayList();
+//            for (Tienda tienda : this.getTiendas()) {
+//                listaEmpresas.add(tienda.getEmpresa());
+//            }
+//            if (listaEmpresas.size() == 0) {
+//                throw new Exception("lista vacia.");
+//            }
+//        } catch (Exception e) {
+//            logger.error("Error listando empresas mediante lista de tiendas: ", e);
+//            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error listando empresas mediante lista de tiendas: ", "Error grave obteniendo empresas de tiendas.");
+//            FacesContext context = FacesContext.getCurrentInstance();
+//            context.addMessage("growl", message);
+//        }
+//        return listaEmpresas;
+//    }
     
     public List<String> listarEmpresas(List<Tienda> tiendas) {
         try {
@@ -162,9 +162,9 @@ public class HomeBean implements Serializable {
             em = emf.createEntityManager();
             consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
             List<Oferta> lo = new ArrayList<>();
-//            lo = consultaOfertas.getResultList();
-//            this.listaOfertas = new ArrayList<>();
-//            this.listaOfertas = consultaOfertas.getResultList();
+            lo = consultaOfertas.getResultList();
+            this.listaOfertas = new ArrayList<>();
+            this.listaOfertas = lo;
         } catch (Exception e) {
             logger.error("Error obteniendo ofertas." + e.getMessage(), e);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error obteniendo ofertas.", "Error grave obteniendo ofertas.");
@@ -192,6 +192,7 @@ public class HomeBean implements Serializable {
             for (Rubro rubro : listaRubros){
                 listaNombresRubros.add(rubro.getNombre());
             }
+            this.listaRubros = listaNombresRubros;
         } catch (Exception e) {
             logger.error("Error obteniendo rubros." + e.getMessage(), e);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error obteniendo rubros.", "Error grave obteniendo rubros.");

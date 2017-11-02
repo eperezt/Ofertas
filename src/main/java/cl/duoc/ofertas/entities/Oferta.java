@@ -5,11 +5,20 @@
  */
 package cl.duoc.ofertas.entities;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
+import javax.imageio.ImageIO;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +37,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -61,7 +72,7 @@ public class Oferta implements Serializable {
     private Date fechafin;
     @Lob
     @Column(name = "FOTOGRAFIA")
-    private Serializable fotografia;
+    private byte[] fotografia;
     @Column(name = "MINIMOPRODUCTOS")
     private BigInteger minimoproductos;
     @Column(name = "MAXIMOPRODUCTOS")
@@ -80,6 +91,14 @@ public class Oferta implements Serializable {
     @JoinColumn(name = "PRODUCTO_IDPRODUCTO", referencedColumnName = "IDPRODUCTO")
     @OneToOne(optional = false)
     private Producto productoIdproducto;
+
+    public StreamedContent getImage() throws IOException, SQLException {
+        FacesContext context = FacesContext.getCurrentInstance();
+        // So, browser is requesting the image. Return a real StreamedContent with the image bytes.
+        Blob a = new javax.sql.rowset.serial.SerialBlob(fotografia);
+        InputStream dbStream = a.getBinaryStream();
+        return new DefaultStreamedContent(dbStream, "image/jpeg");
+    }
 
     public Oferta() {
     }
@@ -104,19 +123,20 @@ public class Oferta implements Serializable {
         this.fechainicio = fechainicio;
     }
 
-    public Date getFechafin() {
-        return fechafin;
+    public String getFechafin() {
+        return fechafin.toLocaleString();
     }
 
     public void setFechafin(Date fechafin) {
         this.fechafin = fechafin;
     }
 
-    public Serializable getFotografia() {
-        return fotografia;
+    public BufferedImage getFotografia() throws IOException {
+//        return fotografia;
+        return ImageIO.read(new ByteArrayInputStream(this.fotografia));
     }
 
-    public void setFotografia(Serializable fotografia) {
+    public void setFotografia(byte[] fotografia) {
         this.fotografia = fotografia;
     }
 
@@ -203,5 +223,5 @@ public class Oferta implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Oferta[ idoferta=" + idoferta + " ]";
     }
-    
+
 }

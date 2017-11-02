@@ -137,7 +137,7 @@
                             <vmArgs>
                                 <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
                             </vmArgs>
-                            <wsdlLocation>http://localhost:16264/OfertasWS/OfertasWS?WSDL</wsdlLocation>
+                            <wsdlLocation>http://localhost:8080/OfertasWS/OfertasWS?WSDL</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/OfertasWS.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-OfertasWS</id>

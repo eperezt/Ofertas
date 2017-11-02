@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="http://localhost:16264/OfertasWS/OfertasWS?WSDL" uri="wsdl/localhost_8080/OfertasWS/OfertasWS.wsdl"/>
-    <system systemId="http://localhost:16264/OfertasWS/OfertasWS?xsd=1" uri="wsdl/localhost_8080/OfertasWS/OfertasWS.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/OfertasWS/OfertasWS?WSDL" uri="wsdl/localhost_8080/OfertasWS/OfertasWS.wsdl"/>
+    <system systemId="http://localhost:8080/OfertasWS/OfertasWS?xsd=1" uri="wsdl/localhost_8080/OfertasWS/OfertasWS.xsd_1.xsd"/>
 </catalog>
