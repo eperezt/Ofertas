@@ -48,7 +48,33 @@ public class HomeBean implements Serializable {
     private String rubroSeleccionado;
     private List<String> listaEmpresas;
     private List<Oferta> listaOfertas;
+    private List<Oferta> listaOfertasFiltradas;
     private List<String> listaRubros;
+    private String filtro;
+
+    public String getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(String filtro) {
+        this.filtro = filtro;
+    }
+
+    public void filterList() {
+        List<Oferta> nuevoFiltro = new ArrayList<>();
+        if (filtro.isEmpty()
+                && rubroSeleccionado.equals("Todos")
+                && empresaSeleccionada.equals("Todas")) {
+            listaOfertasFiltradas = listaOfertas;
+        } else {
+            for (Oferta oferta : listaOfertasFiltradas) {
+                if (oferta.getProductoIdproducto().getNombre().contains(filtro)) {
+                    nuevoFiltro.add(oferta);
+                }
+            }
+            listaOfertasFiltradas = nuevoFiltro;
+        }
+    }
 
     public List<String> getListaRubros() {
         return listaRubros;
@@ -65,7 +91,7 @@ public class HomeBean implements Serializable {
     public void setListaOfertas(List<Oferta> listaOfertas) {
         this.listaOfertas = listaOfertas;
     }
-    
+
     public List<String> getListaEmpresas() {
         return listaEmpresas;
     }
@@ -89,7 +115,7 @@ public class HomeBean implements Serializable {
     public void setRubroSeleccionado(String rubroSeleccionado) {
         this.rubroSeleccionado = rubroSeleccionado;
     }
-    
+
     public List<Tienda> getTiendas() {
         EntityManagerFactory emf = null;
         EntityManager em = null;
@@ -132,7 +158,6 @@ public class HomeBean implements Serializable {
 //        }
 //        return listaEmpresas;
 //    }
-    
     public List<String> listarEmpresas(List<Tienda> tiendas) {
         try {
             listaEmpresas = new ArrayList();
@@ -150,8 +175,8 @@ public class HomeBean implements Serializable {
         }
         return listaEmpresas;
     }
-    
-    private void listarOfertas(){
+
+    private void listarOfertas() {
         EntityManagerFactory emf = null;
         EntityManager em = null;
         TypedQuery<Oferta> consultaOfertas = null;
@@ -176,20 +201,20 @@ public class HomeBean implements Serializable {
             emf = null;
         }
     }
-    
-    public List<String> listarRubros(){
+
+    public List<String> listarRubros() {
         EntityManagerFactory emf = null;
         EntityManager em = null;
         TypedQuery<Rubro> consultaRubros = null;
         List<Rubro> listaRubros = null;
-        List<String> listaNombresRubros  = new ArrayList<>();
-          
+        List<String> listaNombresRubros = new ArrayList<>();
+
         try {
             emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
             em = emf.createEntityManager();
             consultaRubros = em.createNamedQuery("Rubro.findAll", Rubro.class);
             listaRubros = consultaRubros.getResultList();
-            for (Rubro rubro : listaRubros){
+            for (Rubro rubro : listaRubros) {
                 listaNombresRubros.add(rubro.getNombre());
             }
             this.listaRubros = listaNombresRubros;
@@ -205,9 +230,9 @@ public class HomeBean implements Serializable {
         }
         return listaNombresRubros;
     }
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         listarEmpresas(getTiendas());
         listarOfertas();
         listarRubros();

@@ -48,7 +48,9 @@ and open the template in the editor.
                                         </h:selectOneMenu> 
 
                                         <h:outputLabel for="producto" value="Producto:" />
-                                        <p:inputText id="producto" required="false" />
+                                        <p:inputText id="producto" value="#{homeBean.filtro}" required="false">
+                                            <p:ajax event="keyup" update="grid" listener="#{homeBean.filterList}" />
+                                        </p:inputText>
                                         <p:commandButton value="Filtrar" update="panel"/>
                                     </h:panelGrid>
                                 </p:panel>
@@ -65,7 +67,7 @@ and open the template in the editor.
                                 <p:graphicImage name="demo/images/nature/#{image}" alt="Image Description for #{image}" title="#{image}"/>
                             </p:galleria>
                         </ui:repeat>-->
-                        <p:dataGrid var="oferta" value="#{homeBean.listaOfertas}" columns="3" layout="grid"
+                        <p:dataGrid id="grid" var="oferta" value="#{homeBean.listaOfertas}" columns="3" layout="grid"
                                     rows="4" paginator="true" style="margin-top:20px">
                             <f:facet name="header">
                                 Ofertas
@@ -78,7 +80,6 @@ and open the template in the editor.
                                     <h:outputText value="Máximo: #{oferta.maximoproductos}" />
                                 </h:panelGrid>
                             </p:panel>
-
                         </p:dataGrid>
 
 <!--                        <div class="container">
