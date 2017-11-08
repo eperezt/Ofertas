@@ -5,8 +5,6 @@
  */
 package cl.duoc.ofertas.entities;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -17,11 +15,11 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseId;
-import javax.imageio.ImageIO;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -31,9 +29,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Persistence;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -94,7 +94,6 @@ public class Oferta implements Serializable {
 
     public StreamedContent getImage() throws IOException, SQLException {
         FacesContext context = FacesContext.getCurrentInstance();
-        // So, browser is requesting the image. Return a real StreamedContent with the image bytes.
         Blob a = new javax.sql.rowset.serial.SerialBlob(fotografia);
         InputStream dbStream = a.getBinaryStream();
         return new DefaultStreamedContent(dbStream, "image/jpeg");
@@ -131,9 +130,8 @@ public class Oferta implements Serializable {
         this.fechafin = fechafin;
     }
 
-    public BufferedImage getFotografia() throws IOException {
-//        return fotografia;
-        return ImageIO.read(new ByteArrayInputStream(this.fotografia));
+    public byte[] getFotografia() throws IOException {
+        return fotografia;
     }
 
     public void setFotografia(byte[] fotografia) {

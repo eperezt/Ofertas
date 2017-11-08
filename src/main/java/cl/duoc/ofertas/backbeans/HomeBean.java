@@ -9,7 +9,10 @@ import cl.duoc.ofertas.entities.Oferta;
 import cl.duoc.ofertas.entities.Rubro;
 import cl.duoc.ofertas.entities.Tienda;
 import cl.duoc.ofertas.facade.UsuarioFacadeLocal;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -25,6 +28,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import org.apache.log4j.Logger;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -47,10 +51,47 @@ public class HomeBean implements Serializable {
     private String empresaSeleccionada;
     private String rubroSeleccionado;
     private List<String> listaEmpresas;
+    private List<String> listaRubros;
     private List<Oferta> listaOfertas;
     private List<Oferta> listaOfertasFiltradas;
-    private List<String> listaRubros;
     private String filtro;
+    private StreamedContent imagentest;
+
+    public HomeBean() throws IOException, SQLException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
+        Oferta lo = consultaOfertas.getResultList().get(1);
+//        content = new DefaultStreamedContent(is, "", student.getStuID());
+//        return imagentest;
+        imagentest = lo.getImage();
+        listaOfertas = consultaOfertas.getResultList();
+    }
+
+//    public InputStream getImagentest() {
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
+//        EntityManager em = emf.createEntityManager();
+//        TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
+//        Oferta lo = consultaOfertas.getResultList().get(0);
+////        content = new DefaultStreamedContent(is, "", student.getStuID());
+////        return imagentest;
+//        return lo.getImage();
+//    }
+    public StreamedContent getImagentest() {
+        return imagentest;
+    }
+
+    public void setImagentest(StreamedContent imagentest) {
+        this.imagentest = imagentest;
+    }
+
+    public List<Oferta> getListaOfertasFiltradas() {
+        return listaOfertasFiltradas;
+    }
+
+    public void setListaOfertasFiltradas(List<Oferta> listaOfertasFiltradas) {
+        this.listaOfertasFiltradas = listaOfertasFiltradas;
+    }
 
     public String getFiltro() {
         return filtro;
@@ -62,18 +103,59 @@ public class HomeBean implements Serializable {
 
     public void filterList() {
         List<Oferta> nuevoFiltro = new ArrayList<>();
-        if (filtro.isEmpty()
-                && rubroSeleccionado.equals("Todos")
-                && empresaSeleccionada.equals("Todas")) {
-            listaOfertasFiltradas = listaOfertas;
-        } else {
-            for (Oferta oferta : listaOfertasFiltradas) {
-                if (oferta.getProductoIdproducto().getNombre().contains(filtro)) {
+        listaOfertasFiltradas = listaOfertas;
+        for (Oferta oferta : listaOfertasFiltradas) {
+            if (filtro.isEmpty()
+                    && (this.rubroSeleccionado == null || this.rubroSeleccionado.equals("Todos"))
+                    && (this.empresaSeleccionada == null || this.empresaSeleccionada.equals("Todas"))) {
+                nuevoFiltro = listaOfertas;
+            } else if (filtro.isEmpty()
+                    && (this.rubroSeleccionado != null && !rubroSeleccionado.equals("Todos"))
+                    && (this.empresaSeleccionada == null || this.empresaSeleccionada.equals("Todas"))) {
+                if (oferta.getProductoIdproducto().getRubroIdrubro().getNombre().equals(rubroSeleccionado)
+                        && oferta.getProductoIdproducto().getNombre().toUpperCase().contains(filtro.toUpperCase())) {
                     nuevoFiltro.add(oferta);
                 }
+            } else if (filtro.isEmpty()
+                    && (this.rubroSeleccionado == null || this.rubroSeleccionado.equals("Todos"))
+                    && (this.empresaSeleccionada != null && !empresaSeleccionada.equals("Todas"))) {
+                if (oferta.getProductoIdproducto().getTiendaList().get(0).getEmpresa().equals(empresaSeleccionada)
+                        && oferta.getProductoIdproducto().getNombre().toUpperCase().contains(filtro.toUpperCase())) {
+                    nuevoFiltro.add(oferta);
+                }
+            } else if (filtro.isEmpty()
+                    && oferta.getProductoIdproducto().getRubroIdrubro().getNombre().equals(rubroSeleccionado)
+                    && oferta.getProductoIdproducto().getTiendaList().get(0).getEmpresa().equals(empresaSeleccionada)
+                    && oferta.getProductoIdproducto().getNombre().toUpperCase().contains(filtro.toUpperCase())) {
+                nuevoFiltro.add(oferta);
+            } else if (!filtro.isEmpty()
+                    && (this.rubroSeleccionado == null || this.rubroSeleccionado.equals("Todos"))
+                    && (this.empresaSeleccionada == null || this.empresaSeleccionada.equals("Todas"))) {
+                if (oferta.getProductoIdproducto().getNombre().toUpperCase().contains(filtro.toUpperCase())) {
+                    nuevoFiltro.add(oferta);
+                }
+            } else if (!filtro.isEmpty()
+                    && (this.rubroSeleccionado != null && !rubroSeleccionado.equals("Todos"))
+                    && (this.empresaSeleccionada == null || this.empresaSeleccionada.equals("Todas"))) {
+                if (oferta.getProductoIdproducto().getRubroIdrubro().getNombre().equals(rubroSeleccionado)
+                        && oferta.getProductoIdproducto().getNombre().toUpperCase().contains(filtro.toUpperCase())) {
+                    nuevoFiltro.add(oferta);
+                }
+            } else if (!filtro.isEmpty()
+                    && (this.rubroSeleccionado == null || this.rubroSeleccionado.equals("Todos"))
+                    && (this.empresaSeleccionada != null && !empresaSeleccionada.equals("Todas"))) {
+                if (oferta.getProductoIdproducto().getTiendaList().get(0).getEmpresa().equals(empresaSeleccionada)
+                        && oferta.getProductoIdproducto().getNombre().toUpperCase().contains(filtro.toUpperCase())) {
+                    nuevoFiltro.add(oferta);
+                }
+            } else if (!filtro.isEmpty()
+                    && oferta.getProductoIdproducto().getRubroIdrubro().getNombre().equals(rubroSeleccionado)
+                    && oferta.getProductoIdproducto().getTiendaList().get(0).getEmpresa().equals(empresaSeleccionada)
+                    && oferta.getProductoIdproducto().getNombre().toUpperCase().contains(filtro.toUpperCase())) {
+                nuevoFiltro.add(oferta);
             }
-            listaOfertasFiltradas = nuevoFiltro;
         }
+        setListaOfertasFiltradas(nuevoFiltro);
     }
 
     public List<String> getListaRubros() {
@@ -234,7 +316,10 @@ public class HomeBean implements Serializable {
     @PostConstruct
     public void init() {
         listarEmpresas(getTiendas());
-        listarOfertas();
+//        listarOfertas();
         listarRubros();
+        this.listaOfertasFiltradas = listaOfertas;
+        this.rubroSeleccionado = "Todos";
+        this.empresaSeleccionada = "Todas";
     }
 }

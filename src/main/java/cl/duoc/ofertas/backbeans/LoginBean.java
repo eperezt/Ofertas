@@ -6,21 +6,31 @@
 package cl.duoc.ofertas.backbeans;
 
 import cl.duoc.ofertas.constantes.Constantes;
+import cl.duoc.ofertas.entities.Oferta;
 import cl.duoc.ofertas.entities.Usuario;
 import cl.duoc.ofertas.facade.UsuarioFacadeLocal;
 import cl.duoc.wsofertas.ws.LoginRequestVO;
 import cl.duoc.wsofertas.ws.LoginResponseVO;
 import cl.duoc.wsofertas.ws.OfertasWS;
 import cl.duoc.wsofertas.ws.OfertasWS_Service;
+import java.io.IOException;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -42,8 +52,67 @@ public class LoginBean implements Serializable {
     private boolean isLogged;
 
     private Usuario usuarioSesionado;
+    private StreamedContent imagentest;
+    private List<Oferta> listaO;
+    private Oferta of;
+    private List<Integer> imageIds;
 
-    public LoginBean() {
+    public List<Integer> getImageIds() {
+        return imageIds;
+    }    
+    
+    public StreamedContent getprueba() throws IOException, SQLException{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
+        List<Oferta> lo = consultaOfertas.getResultList();
+//        imagentest = lo.get(0).getImage();
+//        listaO = lo;
+        return lo.get(0).getImage();
+    }
+
+    public Oferta getOf() {
+        return of;
+    }
+
+    public void setOf(Oferta of) {
+        this.of = of;
+    }
+
+    public List<Oferta> getListaO() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
+        List<Oferta> lo = consultaOfertas.getResultList();
+        return lo;
+    }
+
+    public void setListaO(List<Oferta> listaO) {
+        this.listaO = listaO;
+    }
+    
+    public StreamedContent getImagentest() {
+        return imagentest;
+    }
+
+    public void setImagentest(StreamedContent imagentest) {
+        this.imagentest = imagentest;
+    }
+
+    public LoginBean() throws IOException, SQLException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
+        List<Oferta> lo = consultaOfertas.getResultList();
+        imagentest = lo.get(0).getImage();
+        listaO = lo;
+        of = lo.get(0);
+        imageIds = new ArrayList<Integer>();
+        imageIds.add(1);
+        imageIds.add(3);
+        imageIds.add(4);
+        imageIds.add(5);
+        
     }
 
     public String loginListener() {
