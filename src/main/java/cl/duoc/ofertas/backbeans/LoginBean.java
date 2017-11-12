@@ -52,66 +52,8 @@ public class LoginBean implements Serializable {
     private boolean isLogged;
 
     private Usuario usuarioSesionado;
-    private StreamedContent imagentest;
-    private List<Oferta> listaO;
-    private Oferta of;
-    private List<Integer> imageIds;
-
-    public List<Integer> getImageIds() {
-        return imageIds;
-    }    
-    
-    public StreamedContent getprueba() throws IOException, SQLException{
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
-        List<Oferta> lo = consultaOfertas.getResultList();
-//        imagentest = lo.get(0).getImage();
-//        listaO = lo;
-        return lo.get(0).getImage();
-    }
-
-    public Oferta getOf() {
-        return of;
-    }
-
-    public void setOf(Oferta of) {
-        this.of = of;
-    }
-
-    public List<Oferta> getListaO() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
-        List<Oferta> lo = consultaOfertas.getResultList();
-        return lo;
-    }
-
-    public void setListaO(List<Oferta> listaO) {
-        this.listaO = listaO;
-    }
-    
-    public StreamedContent getImagentest() {
-        return imagentest;
-    }
-
-    public void setImagentest(StreamedContent imagentest) {
-        this.imagentest = imagentest;
-    }
 
     public LoginBean() throws IOException, SQLException {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
-        List<Oferta> lo = consultaOfertas.getResultList();
-        imagentest = lo.get(0).getImage();
-        listaO = lo;
-        of = lo.get(0);
-        imageIds = new ArrayList<Integer>();
-        imageIds.add(1);
-        imageIds.add(3);
-        imageIds.add(4);
-        imageIds.add(5);
         
     }
 

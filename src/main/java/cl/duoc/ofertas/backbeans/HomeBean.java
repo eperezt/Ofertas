@@ -58,14 +58,26 @@ public class HomeBean implements Serializable {
     private StreamedContent imagentest;
 
     public HomeBean() throws IOException, SQLException {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
-        Oferta lo = consultaOfertas.getResultList().get(1);
-//        content = new DefaultStreamedContent(is, "", student.getStuID());
-//        return imagentest;
-        imagentest = lo.getImage();
-        listaOfertas = consultaOfertas.getResultList();
+        try {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
+            EntityManager em = emf.createEntityManager();
+            TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
+            List<Oferta> lo = consultaOfertas.getResultList();
+            Oferta oferta = null;
+            if (lo.isEmpty()) {
+                throw new Exception("No hay ofertas disponibles.");
+            } else {
+                oferta = lo.get(1);
+            }
+
+            imagentest = oferta.getImage();
+            listaOfertas = consultaOfertas.getResultList();
+        } catch (Exception e) {
+            logger.error("No hay ofertas disponibles.", e);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Atencion: No se han encontrado ofertas disponibles.", "Advertencia busqueda ofertas.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("messages", message);
+        }
     }
 
 //    public InputStream getImagentest() {
@@ -207,7 +219,9 @@ public class HomeBean implements Serializable {
         try {
             emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
             em = emf.createEntityManager();
-            consultaTiendas = em.createNamedQuery("Tienda.findAll", Tienda.class);
+            consultaTiendas
+                    = em.createNamedQuery("Tienda.findAll", Tienda.class
+                    );
             lista = consultaTiendas.getResultList();
         } catch (Exception e) {
             logger.error("Error obteniendo empresas de tienda." + e.getMessage(), e);
@@ -246,7 +260,7 @@ public class HomeBean implements Serializable {
             for (Tienda tienda : tiendas) {
                 listaEmpresas.add(tienda.getEmpresa());
             }
-            if (listaEmpresas.size() == 0) {
+            if (listaEmpresas.isEmpty()) {
                 throw new Exception("lista vacia.");
             }
         } catch (Exception e) {
@@ -267,7 +281,9 @@ public class HomeBean implements Serializable {
         try {
             emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
             em = emf.createEntityManager();
-            consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
+            consultaOfertas
+                    = em.createNamedQuery("Oferta.findAll", Oferta.class
+                    );
             List<Oferta> lo = new ArrayList<>();
             lo = consultaOfertas.getResultList();
             this.listaOfertas = new ArrayList<>();
@@ -294,7 +310,9 @@ public class HomeBean implements Serializable {
         try {
             emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
             em = emf.createEntityManager();
-            consultaRubros = em.createNamedQuery("Rubro.findAll", Rubro.class);
+            consultaRubros
+                    = em.createNamedQuery("Rubro.findAll", Rubro.class
+                    );
             listaRubros = consultaRubros.getResultList();
             for (Rubro rubro : listaRubros) {
                 listaNombresRubros.add(rubro.getNombre());
