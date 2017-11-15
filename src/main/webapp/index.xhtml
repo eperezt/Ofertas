@@ -75,14 +75,14 @@
                     <p:inputText id="txtDireccion" required="true" requiredMessage="La dirección es obligatoria." placeholder="Dirección" value="#{registroConsumidorBean.direccion}" size="50"/>
                     <p:password id="txtPwd2" value="#{registroConsumidorBean.password}" placeholder="Confirma tu contraseña" required="true" requiredMessage="La contraseña es obligatoria." size="50"/>
 
-                    <p:selectOneMenu id="console" value="#{registroConsumidorBean.ciudad}" converter="#{ciudadConverterBean}">
+                    <p:selectOneMenu id="selCiudad" value="#{registroConsumidorBean.ciudad}" converter="#{ciudadConverterBean}">
                         <f:selectItems value="#{genericServiceBean.listaCiudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}" />
                     </p:selectOneMenu>
-                    <p:selectBooleanCheckbox value="#{registroConsumidorBean.recibeNotificaciones}" itemLabel="Deseo recibir notificaciones de ofertas retail en mi correo."/> 
+                    <p:selectBooleanCheckbox value="#{registroConsumidorBean.recibeNotificaciones}" itemLabel="Deseo recibir notificaciones de ofertas retail en mi correo." id="chkCorreo"/> 
 
 
                     <p:commandButton value="Cancelar" type="button" onclick="PF('dlgRegistro').hide();" id="btnCancelarRegistro"/>
-                    <p:commandButton value="¡Registrate!" actionListener="#{registroConsumidorBean.registroListener}" id="btnRegistrarse" update="growl" />
+                    <p:commandButton value="¡Registrate!" actionListener="#{registroConsumidorBean.registroListener}" id="btnRegistrarse" update="growl, txtNombre, txtTelefono, txtApellidoPaterno, txtLogin, txtApellidoMaterno, txtCorreo, txtRut, txtPwd1, txtPwd2, txtDireccion, selCiudad, chkCorreo" />
                 </p:panelGrid>
             </h:form>
         </p:dialog>   
