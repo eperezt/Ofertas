@@ -49,12 +49,16 @@ import org.primefaces.model.StreamedContent;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Oferta.findAll", query = "SELECT o FROM Oferta o")
+    , @NamedQuery(name = "Oferta.findAllPublicadas", query = "SELECT o FROM Oferta o WHERE o.ispublicada = 1")
     , @NamedQuery(name = "Oferta.findByIdoferta", query = "SELECT o FROM Oferta o WHERE o.idoferta = :idoferta")
     , @NamedQuery(name = "Oferta.findByFechainicio", query = "SELECT o FROM Oferta o WHERE o.fechainicio = :fechainicio")
     , @NamedQuery(name = "Oferta.findByFechafin", query = "SELECT o FROM Oferta o WHERE o.fechafin = :fechafin")
     , @NamedQuery(name = "Oferta.findByMinimoproductos", query = "SELECT o FROM Oferta o WHERE o.minimoproductos = :minimoproductos")
     , @NamedQuery(name = "Oferta.findByMaximoproductos", query = "SELECT o FROM Oferta o WHERE o.maximoproductos = :maximoproductos")
-    , @NamedQuery(name = "Oferta.findByIspublicada", query = "SELECT o FROM Oferta o WHERE o.ispublicada = :ispublicada")})
+    , @NamedQuery(name = "Oferta.findByIspublicada", query = "SELECT o FROM Oferta o WHERE o.ispublicada = :ispublicada")
+//    , @NamedQuery(name = "Oferta.findByCantidadValoraciones", query = "SELECT r.idrubro FROM Oferta o INNER JOIN Producto p ON o.productoIdproducto=p.idproducto INNER JOIN Rubro r ON p.rubroIdrubro =r.idrubro INNER JOIN Valoracion v ON o.IDOFERTA=v.ofertaIdoferta INNER JOIN Usuario u ON v.usuarioIdusuario = u.idusuario WHERE u.idusuario = :idusuario AND o.ispublicada = 1 GROUP BY r.idrubro ORDER BY COUNT(r.idrubro) DESC")
+    , @NamedQuery(name = "Oferta.findAllSortedByRubro", query = "SELECT o FROM Oferta o INNER JOIN Producto p ON o.productoIdproducto = p.idproducto INNER JOIN Rubro r ON r.idrubro = p.rubro_idrubro WHERE o.ispublicada = 1 AND r.idrubro = :idrubro")
+})
 public class Oferta implements Serializable {
 
     private static final long serialVersionUID = 1L;

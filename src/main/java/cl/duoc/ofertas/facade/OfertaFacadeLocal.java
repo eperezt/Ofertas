@@ -6,6 +6,7 @@
 package cl.duoc.ofertas.facade;
 
 import cl.duoc.ofertas.entities.Oferta;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,7 @@ public interface OfertaFacadeLocal {
     List<Oferta> findRange(int[] range);
 
     int count();
+    
+    List<Oferta> findAllSortedByRubro(BigDecimal idRubro);
     
 }

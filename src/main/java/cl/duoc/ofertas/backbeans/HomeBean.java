@@ -8,6 +8,9 @@ package cl.duoc.ofertas.backbeans;
 import cl.duoc.ofertas.entities.Oferta;
 import cl.duoc.ofertas.entities.Rubro;
 import cl.duoc.ofertas.entities.Tienda;
+//import cl.duoc.ofertas.facade.OfertaFacade;
+//import cl.duoc.ofertas.facade.RubroFacade;
+//import cl.duoc.ofertas.facade.RubroFacadeLocal;
 import cl.duoc.ofertas.facade.UsuarioFacadeLocal;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,6 +29,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.apache.log4j.Logger;
 import org.primefaces.model.StreamedContent;
@@ -37,6 +41,12 @@ import org.primefaces.model.StreamedContent;
 @SessionScoped
 @Named(value = "homeBean")
 public class HomeBean implements Serializable {
+
+//    @EJB
+//    private RubroFacade rubroFacade;
+
+//    @EJB
+//    private OfertaFacade ofertaFacade;
 
     /* MTP 
      * Esta página necesita:
@@ -59,9 +69,10 @@ public class HomeBean implements Serializable {
 
     public HomeBean() throws IOException, SQLException {
         try {
+            listaOfertas = new ArrayList<Oferta>();
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
             EntityManager em = emf.createEntityManager();
-            TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
+            TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAllPublicadas", Oferta.class);
             List<Oferta> lo = consultaOfertas.getResultList();
             Oferta oferta = null;
             if (lo.isEmpty()) {
@@ -72,6 +83,7 @@ public class HomeBean implements Serializable {
 
             imagentest = oferta.getImage();
             listaOfertas = consultaOfertas.getResultList();
+            ordenarSegunValoracion();
         } catch (Exception e) {
             logger.error("No hay ofertas disponibles.", e);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Atencion: No se han encontrado ofertas disponibles.", "Advertencia busqueda ofertas.");
@@ -80,15 +92,32 @@ public class HomeBean implements Serializable {
         }
     }
 
-//    public InputStream getImagentest() {
+    public void ordenarSegunValoracion() {
+//        listaOfertas.clear();
+//        String query ="SELECT r.idrubro FROM Oferta o INNER JOIN Producto p ON o.producto_Idproducto=p.IDPRODUCTO INNER JOIN Rubro r ON p.rubro_Idrubro =r.IDRUBRO INNER JOIN VALORACION v ON o.IDOFERTA=v.OFERTA_IDOFERTA INNER JOIN Usuario u ON v.USUARIO_IDUSUARIO=u.IDUSUARIO WHERE u.idusuario = :idusuario AND o.ispublicada = 0 GROUP BY r.IDRUBRO ORDER BY(COUNT(r.IDRUBRO)) DESC";
+//        
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
 //        EntityManager em = emf.createEntityManager();
-//        TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAll", Oferta.class);
-//        Oferta lo = consultaOfertas.getResultList().get(0);
-////        content = new DefaultStreamedContent(is, "", student.getStuID());
-////        return imagentest;
-//        return lo.getImage();
-//    }
+//        TypedQuery<Rubro> consultaRubros = em.createNamedQuery("Rubro.findByCantidadValoraciones", Rubro.class);
+//        consultaRubros.setParameter("idusuario", 1);
+//        List<Rubro> lr = consultaRubros.getResultList();
+//        
+//
+////        List<Rubro> lr = rubroFacade.findByCantidadValoraciones();
+//        List<Oferta> lo = new ArrayList<>();
+//        for (Rubro rubro : lr) {
+//            lo = ofertaFacade.findAllSortedByRubro(rubro.getIdrubro());
+//            for (Oferta oferta : lo) {
+//                listaOfertas.add(oferta);
+//            }
+//        }
+////        rubroFacade.findByCantidadValoraciones().forEach((rubro) -> {
+////            ofertaFacade.findAllSortedByRubro(rubro.getIdrubro()).forEach((oferta) -> {
+////                listaOfertas.add(oferta);
+////            });
+////        });
+    }
+
     public StreamedContent getImagentest() {
         return imagentest;
     }

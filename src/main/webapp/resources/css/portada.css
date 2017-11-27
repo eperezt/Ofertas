@@ -1,0 +1,45 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 26-11-2017, 18:02:18
+    Author     : Harvesting-Woods
+*/
+
+body {
+    background-color: #fff;
+}
+
+portada {
+    
+}
+
+titulo {
+    text-align: center;
+}
+
+footer{
+    background: #ff8f04;
+    height: 3vh;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+}
+
+header {
+    position: fixed;
+    top:0px;
+    left: 0px;
+    background: #ff8f04;
+    color: #fff;
+    height: 3vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: -webkit-fill-available;
+    /* text-align: center; */
+    /* vertical-align: middle; */
+}

@@ -30,4 +30,5 @@ public interface RubroFacadeLocal {
 
     int count();
     
+    List<Rubro> findByCantidadValoraciones();
 }

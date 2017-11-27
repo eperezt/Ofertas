@@ -40,9 +40,14 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Rubro.findByDescripcion", query = "SELECT r FROM Rubro r WHERE r.descripcion = :descripcion")
     , @NamedQuery(name = "Rubro.findByIsactivo", query = "SELECT r FROM Rubro r WHERE r.isactivo = :isactivo")
     , @NamedQuery(name = "Rubro.findByFechacreacion", query = "SELECT r FROM Rubro r WHERE r.fechacreacion = :fechacreacion")
-    , @NamedQuery(name = "Rubro.findByFechamodificacion", query = "SELECT r FROM Rubro r WHERE r.fechamodificacion = :fechamodificacion")})
-public class Rubro implements Serializable {
+    , @NamedQuery(name = "Rubro.findByFechamodificacion", query = "SELECT r FROM Rubro r WHERE r.fechamodificacion = :fechamodificacion")
+    , @NamedQuery(name = "Rubro.findByCantidadValoraciones", query = "SELECT r.idrubro FROM Rubro r INNER JOIN Producto p ON r.idrubro = p.rubroIdrubro INNER JOIN Oferta o ON o.productoIdproducto=p.idproducto INNER JOIN Valoracion v ON o.idoferta=v.ofertaIdoferta INNER JOIN Usuario u ON v.usuarioIdusuario=u.idusuario WHERE u.idusuario = :idusuario AND o.ispublicada =1 GROUP BY r.idrubro ORDER BY COUNT(r.idrubro) DESC")
+//    , @NamedQuery(name = "Rubro.findByCantidadValoraciones", query = "SELECT r.idrubro FROM Oferta o INNER JOIN Producto p ON o.productoIdproducto=p.idproducto INNER JOIN Rubro r ON p.rubroIdrubro =r.idrubro INNER JOIN Valoracion v ON o.IDOFERTA=v.ofertaIdoferta INNER JOIN Usuario u ON v.usuarioIdusuario = u.idusuario WHERE u.idusuario = :idusuario AND o.ispublicada = 1 GROUP BY r.idrubro ORDER BY(COUNT(r.idrubro)) DESC")
+//    , @NamedQuery(name = "Rubro.findByCantidadValoraciones", query = "SELECT r.idrubro FROM Oferta o INNER JOIN Producto p ON o.producto_Idproducto=p.IDPRODUCTO INNER JOIN Rubro r ON p.rubro_Idrubro =r.IDRUBRO INNER JOIN VALORACION v ON o.IDOFERTA=v.OFERTA_IDOFERTA INNER JOIN Usuario u ON v.USUARIO_IDUSUARIO=u.IDUSUARIO WHERE u.idusuario = :idusuario AND o.ispublicada = 0 GROUP BY r.IDRUBRO ORDER BY(COUNT(r.IDRUBRO)) DESC")
+})
 
+public class Rubro implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -166,5 +171,5 @@ public class Rubro implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Rubro[ idrubro=" + idrubro + " ]";
     }
-    
+
 }

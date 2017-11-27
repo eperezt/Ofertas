@@ -7,6 +7,7 @@
     <h:head>
         <title>Ofertas</title>
         <h:outputStylesheet name="login.css" library="css" />
+        <h:outputStylesheet name="portada.css" library="css" />
         <h:outputStylesheet name="default.css" library="css" />
         <script type="text/javascript">
             PrimeFaces.validator['custom.emailValidator'] = {
@@ -26,66 +27,70 @@
         </script>
     </h:head>
 
-    <h:body>
-        <div class="container">
-            <div class="card card-container">
-                <h:graphicImage library="images" name="avatar_2x.png" class="profile-img-card"/>
-                <h:form class="form-signin">
+    <h:body >
+        <div class="portada">
+            <div class="header"><h2>OFERTAS RETAIL</h2></div>
+            <div class="container">
+                <div class="card card-container">
+                    <h:graphicImage library="images" name="avatar_2x.png" class="profile-img-card"/>
+                    <h:form class="form-signin">
+                        <p:growl id="growl" sticky="true" showDetail="false" life="3000" />
+                        <h:outputLabel for="username" value="Usuario:" />
+                        <p:inputText id="username" value="#{loginBean.loginUsuario}" required="true" label="username" requiredMessage="El nombre de usuario es obligatorio." class="form-control" style="text-transform: uppercase">
+                            <p:keyFilter regEx="/[a-z0-9_.]/i"/>
+                        </p:inputText>
+                        <h:outputLabel for="password" value="Contraseña:" />
+                        <p:password id="password" value="#{loginBean.passwordUsuario}" required="true" label="password" requiredMessage="La contraseña es obligatoria." class="form-control"/>
+                        <p:commandButton value="Ingresar" update="growl" action="#{loginBean.loginListener}" id="btnIngresar"/>
+                    </h:form>
+                    <h:form class="form-signin">¿No posees cuenta?, 
+                        <p:commandLink id="lknRegistro" onclick="PF('dlgRegistro').show();">
+                            <h:outputText value="Regístrate aquí!" />
+                        </p:commandLink>
+                    </h:form>
+                </div><!-- /card-container -->
+            </div><!-- /container -->
+        </div>
+
+            <p:dialog header="Registro Consumidores" widgetVar="dlgRegistro" modal="true" width="60%" height="80%" closeOnEscape="true" maximizable="false" minimizable="false" resizable="false">
+                <h:form>
                     <p:growl id="growl" sticky="true" showDetail="false" life="3000" />
-                    <h:outputLabel for="username" value="Usuario:" />
-                    <p:inputText id="username" value="#{loginBean.loginUsuario}" required="true" label="username" requiredMessage="El nombre de usuario es obligatorio." class="form-control" style="text-transform: uppercase">
-                        <p:keyFilter regEx="/[a-z0-9_.]/i"/>
-                    </p:inputText>
-                    <h:outputLabel for="password" value="Contraseña:" />
-                    <p:password id="password" value="#{loginBean.passwordUsuario}" required="true" label="password" requiredMessage="La contraseña es obligatoria." class="form-control"/>
-                    <p:commandButton value="Ingresar" update="growl" action="#{loginBean.loginListener}" id="btnIngresar"/>
+                    <h:outputText value="¡Registrate en el sistema de ofertas!" style="font-weight: bold;font-size: 18px"/>
+                    <br/>
+                    <br/>
+                    <h:outputText value="Ingresa los datos solicitados para registrar tu cuenta en nuestro sistema: " style="font-size: 14px"/>
+                    <br/>
+                    <br/>
+                    <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder">
+                        <p:inputText id="txtNombre" required="true" requiredMessage="El nombre es obligatorio." placeholder="Nombre" value="#{registroConsumidorBean.nombre}" size="50"/>
+                        <p:inputText id="txtTelefono" required="true" requiredMessage="El teléfono es obligatorio." placeholder="Teléfono" value="#{registroConsumidorBean.telefono}" size="50"/>
+
+                        <p:inputText id="txtApellidoPaterno" required="true" requiredMessage="El apellido paterno es obligatorio." placeholder="Apellido paterno" value="#{registroConsumidorBean.apellidoPaterno}" size="50"/>
+                        <p:inputText id="txtLogin" required="true" requiredMessage="El login es obligatorio." placeholder="Login ID" value="#{registroConsumidorBean.login}" size="20" style="text-transform: uppercase"/>
+
+                        <p:inputText id="txtApellidoMaterno" required="true" requiredMessage="El apellido materno es obligatorio." placeholder="Apellido materno" value="#{registroConsumidorBean.apellidoMaterno}" size="50"/>
+                        <p:inputText id="txtCorreo" required="true" requiredMessage="El correo electrónico es obligatorio." placeholder="Dirección de correo: nombre@correo.cl" value="#{registroConsumidorBean.correo}" size="50" validatorMessage="Error: Formato de mail no válido">
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        </p:inputText>
+
+                        <p:inputText id="txtRut" required="true" requiredMessage="El rut es obligatorio." placeholder="RUT (ie: ########-#)" value="#{registroConsumidorBean.rut}" size="20"/>
+                        <p:password id="txtPwd1" value="#{registroConsumidorBean.password}" match="txtPwd2" placeholder="Contraseña" required="true" requiredMessage="La contraseña es obligatoria." size="50"  validatorMessage="Las Contraseñas no coinciden."/>
+
+                        <p:inputText id="txtDireccion" required="true" requiredMessage="La dirección es obligatoria." placeholder="Dirección" value="#{registroConsumidorBean.direccion}" size="50"/>
+                        <p:password id="txtPwd2" value="#{registroConsumidorBean.password}" placeholder="Confirma tu contraseña" required="true" requiredMessage="La contraseña es obligatoria." size="50"/>
+
+                        <p:selectOneMenu id="console" value="#{registroConsumidorBean.ciudad}" converter="#{ciudadConverterBean}">
+                            <f:selectItems value="#{genericServiceBean.listaCiudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}" />
+                        </p:selectOneMenu>
+                        <p:selectBooleanCheckbox value="#{registroConsumidorBean.recibeNotificaciones}" itemLabel="Deseo recibir notificaciones de ofertas retail en mi correo."/> 
+
+
+                        <p:commandButton value="Cancelar" type="button" onclick="PF('dlgRegistro').hide();" id="btnCancelarRegistro"/>
+                        <p:commandButton value="¡Registrate!" actionListener="#{registroConsumidorBean.registroListener}" id="btnRegistrarse" update="growl" />
+                    </p:panelGrid>
                 </h:form>
-                <h:form class="form-signin">¿No posees cuenta?, 
-                    <p:commandLink id="lknRegistro" onclick="PF('dlgRegistro').show();">
-                        <h:outputText value="Regístrate aquí!" />
-                    </p:commandLink>
-                </h:form>
-            </div><!-- /card-container -->
-        </div><!-- /container -->
-
-        <p:dialog header="Registro Consumidores" widgetVar="dlgRegistro" modal="true" width="60%" height="80%" closeOnEscape="true" maximizable="false" minimizable="false" resizable="false">
-            <h:form>
-                <p:growl id="growl" sticky="true" showDetail="false" life="3000" />
-                <h:outputText value="¡Registrate en el sistema de ofertas!" style="font-weight: bold;font-size: 18px"/>
-                <br/>
-                <br/>
-                <h:outputText value="Ingresa los datos solicitados para registrar tu cuenta en nuestro sistema: " style="font-size: 14px"/>
-                <br/>
-                <br/>
-                <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder">
-                    <p:inputText id="txtNombre" required="true" requiredMessage="El nombre es obligatorio." placeholder="Nombre" value="#{registroConsumidorBean.nombre}" size="50"/>
-                    <p:inputText id="txtTelefono" required="true" requiredMessage="El teléfono es obligatorio." placeholder="Teléfono" value="#{registroConsumidorBean.telefono}" size="50"/>
-
-                    <p:inputText id="txtApellidoPaterno" required="true" requiredMessage="El apellido paterno es obligatorio." placeholder="Apellido paterno" value="#{registroConsumidorBean.apellidoPaterno}" size="50"/>
-                    <p:inputText id="txtLogin" required="true" requiredMessage="El login es obligatorio." placeholder="Login ID" value="#{registroConsumidorBean.login}" size="20" style="text-transform: uppercase"/>
-
-                    <p:inputText id="txtApellidoMaterno" required="true" requiredMessage="El apellido materno es obligatorio." placeholder="Apellido materno" value="#{registroConsumidorBean.apellidoMaterno}" size="50"/>
-                    <p:inputText id="txtCorreo" required="true" requiredMessage="El correo electrónico es obligatorio." placeholder="Dirección de correo: nombre@correo.cl" value="#{registroConsumidorBean.correo}" size="50" validatorMessage="Error: Formato de mail no válido">
-                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                    </p:inputText>
-
-                    <p:inputText id="txtRut" required="true" requiredMessage="El rut es obligatorio." placeholder="RUT (ie: ########-#)" value="#{registroConsumidorBean.rut}" size="20"/>
-                    <p:password id="txtPwd1" value="#{registroConsumidorBean.password}" match="txtPwd2" placeholder="Contraseña" required="true" requiredMessage="La contraseña es obligatoria." size="50"  validatorMessage="Las Contraseñas no coinciden."/>
-
-                    <p:inputText id="txtDireccion" required="true" requiredMessage="La dirección es obligatoria." placeholder="Dirección" value="#{registroConsumidorBean.direccion}" size="50"/>
-                    <p:password id="txtPwd2" value="#{registroConsumidorBean.password}" placeholder="Confirma tu contraseña" required="true" requiredMessage="La contraseña es obligatoria." size="50"/>
-
-                    <p:selectOneMenu id="console" value="#{registroConsumidorBean.ciudad}" converter="#{ciudadConverterBean}">
-                        <f:selectItems value="#{genericServiceBean.listaCiudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}" />
-                    </p:selectOneMenu>
-                    <p:selectBooleanCheckbox value="#{registroConsumidorBean.recibeNotificaciones}" itemLabel="Deseo recibir notificaciones de ofertas retail en mi correo."/> 
-
-
-                    <p:commandButton value="Cancelar" type="button" onclick="PF('dlgRegistro').hide();" id="btnCancelarRegistro"/>
-                    <p:commandButton value="¡Registrate!" actionListener="#{registroConsumidorBean.registroListener}" id="btnRegistrarse" update="growl" />
-                </p:panelGrid>
-            </h:form>
-        </p:dialog>   
+            </p:dialog>   
+            <div class="footer"></div>
     </h:body>
 </html>
 

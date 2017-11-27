@@ -8,6 +8,7 @@ package cl.duoc.ofertas.facade;
 import cl.duoc.ofertas.entities.Oferta;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -53,5 +54,19 @@ public class OfertaFacade extends AbstractFacade<Oferta> implements OfertaFacade
             System.out.println("cl.duoc.ofertas.facade.OfertaFacade.find()" + e.getMessage());
         }
         return oferta;
+    }
+    
+    @Override
+    public List<Oferta> findAllSortedByRubro(BigDecimal idRubro){
+       List<Oferta> listaOfertas = null;
+        try {
+            listaOfertas = new ArrayList<>();
+            TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAllSortedByRubro", Oferta.class);
+            consultaOfertas.setParameter("idrubro", idRubro);
+            listaOfertas = consultaOfertas.getResultList();
+        } catch (Exception e) {
+            System.out.println("cl.duoc.ofertas.facade.OfertaFacade.find()" + e.getMessage());
+        }
+        return listaOfertas;
     }
 }

@@ -16,15 +16,80 @@ and open the template in the editor.
  */
 body, html {
     height: 100%;
-    background-repeat: no-repeat;
-    background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
+    /*background-repeat: no-repeat;*/
+    /*background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
+    /*background: #F7F7F7;*/
     font-family: sans-serif !important;
     font-size: 16px !important;
+    /*height: 5vh;*/    
+    margin-top: 3vh;
+}
+
+.portada{
+    background-image: url(/Ofertas/faces/javax.faces.resource/Portada.png?ln=images);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+}
+
+.right{
+    right: 10px
+}
+
+/*.header {
+    background: #ff8f04;
+    color: #fff;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     text-align: center; 
+     vertical-align: middle; 
+}*/
+
+.header {
+    position: fixed;
+    top:0px;
+    left: 0px;
+    background: #ff8f04;
+    color: #fff;
+    height: 3vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: -webkit-fill-available;
+    /* text-align: center; */
+    /* vertical-align: middle; */
 }
 
 .card-container.card {
     max-width: 350px;
     padding: 40px 40px;
+    background-color: #fff;
+    border-color: #ff8f04;
+    border-style: solid;
+    border-width: 0.6Vh;
+}
+
+.card.card-container.login {
+    background-color: #fff;
+    border-color: #ff8f04;
+    border-style: solid;
+    border-width: 0.5vh;
+}
+
+.footer{
+    background: #ff8f04;
+    height: 3vh;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
 }
 
 .btn {
@@ -168,4 +233,14 @@ body, html {
 .ui-watermark {
 	color: gray !important;
 	font-weight: normal !important;
+}
+.ui-button-text-only .ui-button-text {
+    padding: .3em 1em;
+    color: #fff;
+    background-color: #ff8f04d4;
+    text-shadow: none;
+}
+
+.titulo {
+    text-align: center;
 }
