@@ -61,27 +61,14 @@ public class HomeBean implements Serializable {
     private List<Oferta> listaOfertas;
     private List<Oferta> listaOfertasFiltradas;
     private String filtro;
-    private StreamedContent imagentest;
 
     public HomeBean() throws IOException, SQLException {
         try {
-            listaOfertas = new ArrayList<Oferta>();
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
-            EntityManager em = emf.createEntityManager();
-            TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAllPublicadas", Oferta.class);
-            List<Oferta> lo = consultaOfertas.getResultList();
-            Oferta oferta = null;
-
-            if (lo.isEmpty()) {
-                throw new Exception("No hay ofertas disponibles.");
-            } else {
-                oferta = lo.get(0);
-            }
-
-            imagentest = oferta.getImage();
-            listaOfertas = consultaOfertas.getResultList();
+            this.listaOfertas = new ArrayList<Oferta>();
+            
+            listarOfertas();
             listaOfertasFiltradas = listaOfertas;
-            ordenarSegunValoracion();
+//            ordenarSegunValoracion();
         } catch (Exception e) {
             logger.error("No hay ofertas disponibles.", e);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Atencion: No se han encontrado ofertas disponibles.", "Advertencia busqueda ofertas.");
@@ -95,21 +82,12 @@ public class HomeBean implements Serializable {
     }
 
     public String cambiarPagina(String param) throws IOException {
-//        HomeBean();
         listarOfertas();
         listaOfertasFiltradas = listaOfertas;
 //        return "page2?faces-redirect=true&includeViewParams=true&p1="+param;
 //        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
 //        context.redirect(param);
         return param;
-    }
-
-    public StreamedContent getImagentest() {
-        return imagentest;
-    }
-
-    public void setImagentest(StreamedContent imagentest) {
-        this.imagentest = imagentest;
     }
 
     public List<Oferta> getListaOfertasFiltradas() {
@@ -273,17 +251,24 @@ public class HomeBean implements Serializable {
         EntityManagerFactory emf = null;
         EntityManager em = null;
         TypedQuery<Oferta> consultaOfertas = null;
-        List<Oferta> lista = null;
+        List<Oferta> lo = null;
+        Oferta oferta = null;
 
         try {
+            
             emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
             em = emf.createEntityManager();
             consultaOfertas = em.createNamedQuery("Oferta.findAllPublicadas", Oferta.class);
-            List<Oferta> lo = new ArrayList<>();
+            lo = new ArrayList<>();
             lo = consultaOfertas.getResultList();
-            this.listaOfertas = new ArrayList<>();
             this.listaOfertas = lo;
 
+            if (lo.isEmpty()) {
+                throw new Exception("No hay ofertas disponibles.");
+            } 
+
+            listaOfertas  = lo;
+            listaOfertasFiltradas = listaOfertas;
         } catch (Exception e) {
             logger.error("Error obteniendo ofertas." + e.getMessage(), e);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error obteniendo ofertas.", "Error grave obteniendo ofertas.");
@@ -330,7 +315,6 @@ public class HomeBean implements Serializable {
     @PostConstruct
     public void init() {
         listarEmpresas(getTiendas());
-//        listarOfertas();
         listarRubros();
         this.listaOfertasFiltradas = listaOfertas;
         this.rubroSeleccionado = "Todos";
