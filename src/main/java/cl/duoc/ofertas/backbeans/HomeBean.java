@@ -22,14 +22,11 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.apache.log4j.Logger;
 import org.primefaces.model.StreamedContent;
@@ -44,7 +41,6 @@ public class HomeBean implements Serializable {
 
 //    @EJB
 //    private RubroFacade rubroFacade;
-
 //    @EJB
 //    private OfertaFacade ofertaFacade;
 
@@ -75,14 +71,16 @@ public class HomeBean implements Serializable {
             TypedQuery<Oferta> consultaOfertas = em.createNamedQuery("Oferta.findAllPublicadas", Oferta.class);
             List<Oferta> lo = consultaOfertas.getResultList();
             Oferta oferta = null;
+
             if (lo.isEmpty()) {
                 throw new Exception("No hay ofertas disponibles.");
             } else {
-                oferta = lo.get(1);
+                oferta = lo.get(0);
             }
 
             imagentest = oferta.getImage();
             listaOfertas = consultaOfertas.getResultList();
+            listaOfertasFiltradas = listaOfertas;
             ordenarSegunValoracion();
         } catch (Exception e) {
             logger.error("No hay ofertas disponibles.", e);
@@ -93,29 +91,17 @@ public class HomeBean implements Serializable {
     }
 
     public void ordenarSegunValoracion() {
-//        listaOfertas.clear();
-//        String query ="SELECT r.idrubro FROM Oferta o INNER JOIN Producto p ON o.producto_Idproducto=p.IDPRODUCTO INNER JOIN Rubro r ON p.rubro_Idrubro =r.IDRUBRO INNER JOIN VALORACION v ON o.IDOFERTA=v.OFERTA_IDOFERTA INNER JOIN Usuario u ON v.USUARIO_IDUSUARIO=u.IDUSUARIO WHERE u.idusuario = :idusuario AND o.ispublicada = 0 GROUP BY r.IDRUBRO ORDER BY(COUNT(r.IDRUBRO)) DESC";
-//        
-//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
-//        EntityManager em = emf.createEntityManager();
-//        TypedQuery<Rubro> consultaRubros = em.createNamedQuery("Rubro.findByCantidadValoraciones", Rubro.class);
-//        consultaRubros.setParameter("idusuario", 1);
-//        List<Rubro> lr = consultaRubros.getResultList();
-//        
-//
-////        List<Rubro> lr = rubroFacade.findByCantidadValoraciones();
-//        List<Oferta> lo = new ArrayList<>();
-//        for (Rubro rubro : lr) {
-//            lo = ofertaFacade.findAllSortedByRubro(rubro.getIdrubro());
-//            for (Oferta oferta : lo) {
-//                listaOfertas.add(oferta);
-//            }
-//        }
-////        rubroFacade.findByCantidadValoraciones().forEach((rubro) -> {
-////            ofertaFacade.findAllSortedByRubro(rubro.getIdrubro()).forEach((oferta) -> {
-////                listaOfertas.add(oferta);
-////            });
-////        });
+
+    }
+
+    public String cambiarPagina(String param) throws IOException {
+//        HomeBean();
+        listarOfertas();
+        listaOfertasFiltradas = listaOfertas;
+//        return "page2?faces-redirect=true&includeViewParams=true&p1="+param;
+//        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+//        context.redirect(param);
+        return param;
     }
 
     public StreamedContent getImagentest() {
@@ -265,24 +251,6 @@ public class HomeBean implements Serializable {
         return (List<Tienda>) lista;
     }
 
-//    public List<String> listarEmpresas() {
-//        ArrayList listaEmpresas = null;
-//        try {
-//            listaEmpresas = new ArrayList();
-//            for (Tienda tienda : this.getTiendas()) {
-//                listaEmpresas.add(tienda.getEmpresa());
-//            }
-//            if (listaEmpresas.size() == 0) {
-//                throw new Exception("lista vacia.");
-//            }
-//        } catch (Exception e) {
-//            logger.error("Error listando empresas mediante lista de tiendas: ", e);
-//            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error listando empresas mediante lista de tiendas: ", "Error grave obteniendo empresas de tiendas.");
-//            FacesContext context = FacesContext.getCurrentInstance();
-//            context.addMessage("growl", message);
-//        }
-//        return listaEmpresas;
-//    }
     public List<String> listarEmpresas(List<Tienda> tiendas) {
         try {
             listaEmpresas = new ArrayList();
@@ -310,13 +278,12 @@ public class HomeBean implements Serializable {
         try {
             emf = Persistence.createEntityManagerFactory("cl.duoc_Ofertas_war_1.0-SNAPSHOTPU");
             em = emf.createEntityManager();
-            consultaOfertas
-                    = em.createNamedQuery("Oferta.findAll", Oferta.class
-                    );
+            consultaOfertas = em.createNamedQuery("Oferta.findAllPublicadas", Oferta.class);
             List<Oferta> lo = new ArrayList<>();
             lo = consultaOfertas.getResultList();
             this.listaOfertas = new ArrayList<>();
             this.listaOfertas = lo;
+
         } catch (Exception e) {
             logger.error("Error obteniendo ofertas." + e.getMessage(), e);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error obteniendo ofertas.", "Error grave obteniendo ofertas.");
