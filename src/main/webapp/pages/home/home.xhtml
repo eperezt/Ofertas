@@ -15,67 +15,67 @@ and open the template in the editor.
         <h:outputStylesheet name="login.css" library="css" />
     </h:head>
     <h:body>
-                <div class="header"><h2>OFERTAS RETAIL</h2></div>
-                <p:layout style="min-width:400px;min-height:800px;">
-                    <p:layoutUnit position="west" resizable="false" size="210" minSize="200" maxSize="350">
-                        <h:form>  
-                            <p:growl id="messages" showDetail="false"/>
-                            <h2 style="margin-top:20">Menu</h2>
-                            <p:menu>
-                                <p:menuitem value="Lista de ofertas"            outcome="/pages/home/home"                  update="messages"/>
-                                <p:menuitem value="Tus Puntos"                  outcome="/pages/consumidor/puntos"          update="messages"/>
-                                <p:menuitem value="Cupón de descuento"          outcome="/pages/consumidor/cuponDescuento"  update="messages"/>
-                            </p:menu>
-                        </h:form>
-                    </p:layoutUnit>
-                    <p:layoutUnit position="center">
-                        <div class="titulo">
-                            <h2>¡Elije tu Oferta!</h2>
-                        </div>
-                        <div class="container">
-                            <h:form>
-                                <p:panel id="panel" header="Filtrar ofertas" style="margin-bottom:10px;">
-                                    <p:messages id="messages" />
-                                    <h:panelGrid columns="7" cellpadding="5">
-                                        <h:outputLabel for="somEmpresas" value="Empresa:" />
-                                        <h:selectOneMenu id="somEmpresas" value = "#{homeBean.empresaSeleccionada}"> 
-                                            <f:selectItem itemLabel="Todas" itemValue=""/>
-                                            <f:selectItems value="#{homeBean.listaEmpresas}"/>                        
-                                        </h:selectOneMenu> 
+        <div class="header"><h2>OFERTAS RETAIL</h2></div>
+        <p:layout style="min-width:400px;min-height:800px;">
+            <p:layoutUnit position="west" resizable="false" size="210" minSize="200" maxSize="350">
+                <h:form>  
+                    <p:growl id="messages" showDetail="false"/>
+                    <h2 style="margin-top:20">Menu</h2>
+                    <p:menu>
+                        <p:menuitem value="Lista de ofertas" action="#{homeBean.cambiarPagina('/pages/home/home')}"/>
+                        <p:menuitem value="Tus Puntos" action="#{homeBean.cambiarPagina('/pages/consumidor/puntos')}"/>
+                        <p:menuitem value="Cupón de descuento" action="#{homeBean.cambiarPagina('/pages/consumidor/cuponDescuento')}"/>
+                    </p:menu>
+                </h:form>
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <div class="titulo">
+                    <h2>¡Elije tu Oferta!</h2>
+                </div>
+                <div class="container">
+                    <h:form>
+                        <p:panel id="panel" header="Filtrar ofertas" style="margin-bottom:10px;">
+                            <p:messages id="messages" />
+                            <h:panelGrid columns="7" cellpadding="5">
+                                <h:outputLabel for="somEmpresas" value="Empresa:" />
+                                <h:selectOneMenu id="somEmpresas" value = "#{homeBean.empresaSeleccionada}"> 
+                                    <f:selectItem itemLabel="Todas" itemValue=""/>
+                                    <f:selectItems value="#{homeBean.listaEmpresas}"/>                        
+                                </h:selectOneMenu> 
 
-                                        <h:outputLabel for="somRubros" value="Rubro:" />
-                                        <h:selectOneMenu id="somRubros" value = "#{homeBean.rubroSeleccionado}"> 
-                                            <f:selectItem itemLabel="Todos" itemValue=""/>
-                                            <f:selectItems value="#{homeBean.listaRubros}"/>                        
-                                        </h:selectOneMenu> 
+                                <h:outputLabel for="somRubros" value="Rubro:" />
+                                <h:selectOneMenu id="somRubros" value = "#{homeBean.rubroSeleccionado}"> 
+                                    <f:selectItem itemLabel="Todos" itemValue=""/>
+                                    <f:selectItems value="#{homeBean.listaRubros}"/>                        
+                                </h:selectOneMenu> 
 
-                                        <h:outputLabel for="producto" value="Producto:" />
-                                        <p:inputText value="#{homeBean.filtro}">
-                                            <p:ajax event="keyup" update="grid" listener="#{homeBean.filterList()}" />
-                                        </p:inputText>
-                                        <p:commandButton value="Filtrar" update="grid" actionListener="#{homeBean.filterList()}"/>
-                                    </h:panelGrid>
-                                </p:panel>
-                            </h:form>
-                        </div>
-                        <p:dataGrid id="grid" var="oferta" value="#{homeBean.listaOfertasFiltradas}" columns="3" layout="grid"
-                                    rows="4" paginator="true" style="margin-top:20px">
-                            <f:facet name="header">
-                                Ofertas
-                            </f:facet>
-                            <p:panel header="#{oferta.productoIdproducto.nombre}" style="text-align:center">
-                                <h:panelGrid columns="1" style="width:100%">
-                                    <p:graphicImage value="#{imageStreamer.image}">
-                                        <f:param name="id" value="#{oferta.idoferta}" />
-                                    </p:graphicImage>
-                                    <h:outputText value="#{oferta.fechainicio} - #{oferta.fechafin}" />
-                                    <h:outputText value="Minimo: #{oferta.minimoproductos}" />
-                                    <h:outputText value="Máximo: #{oferta.maximoproductos}" />
-                                </h:panelGrid>
-                            </p:panel>
-                        </p:dataGrid>
-                    </p:layoutUnit>
-                </p:layout>                
-                <div class="footer">asd</div>
+                                <h:outputLabel for="producto" value="Producto:" />
+                                <p:inputText value="#{homeBean.filtro}">
+                                    <p:ajax event="keyup" update="grid" listener="#{homeBean.filterList()}" />
+                                </p:inputText>
+                                <p:commandButton value="Filtrar" update="grid" actionListener="#{homeBean.filterList()}"/>
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:form>
+                </div>
+                <p:dataGrid id="grid" var="oferta" value="#{homeBean.listaOfertasFiltradas}" columns="3" layout="grid"
+                            rows="4" paginator="true" style="margin-top:20px">
+                    <f:facet name="header">
+                        Ofertas
+                    </f:facet>
+                    <p:panel header="#{oferta.productoIdproducto.nombre}" style="text-align:center">
+                        <h:panelGrid columns="1" style="width:100%">
+                            <p:graphicImage value="#{imageStreamer.image}">
+                                <f:param name="id" value="#{oferta.idoferta}" />
+                            </p:graphicImage>
+                            <h:outputText value="#{oferta.fechainicio} - #{oferta.fechafin}" />
+                            <h:outputText value="Minimo: #{oferta.minimoproductos}" />
+                            <h:outputText value="Máximo: #{oferta.maximoproductos}" />
+                        </h:panelGrid>
+                    </p:panel>
+                </p:dataGrid>
+            </p:layoutUnit>
+        </p:layout>                
+        <div class="footer"></div>
     </h:body>
 </html>

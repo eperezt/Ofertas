@@ -12,9 +12,9 @@
                             <p:growl id="messages" showDetail="false"/>
                             <h2 style="margin-top:20">Menu</h2>
                             <p:menu>
-                                <p:menuitem value="Lista de ofertas"            outcome="/pages/home/home"                  update="messages"/>
-                                <p:menuitem value="Tus Puntos"                  outcome="/pages/consumidor/puntos"          update="messages"/>
-                                <p:menuitem value="Cupón de descuento"          outcome="/pages/consumidor/cuponDescuento"  update="messages"/>
+                                <p:menuitem value="Lista de ofertas" action="#{homeBean.cambiarPagina('/pages/home/home')}"/>
+                                <p:menuitem value="Tus Puntos" action="#{homeBean.cambiarPagina('/pages/consumidor/puntos')}"/>
+                                <p:menuitem value="Cupón de descuento" action="#{homeBean.cambiarPagina('/pages/consumidor/cuponDescuento')}"/>
                             </p:menu>
                         </h:form>
                     </p:layoutUnit>

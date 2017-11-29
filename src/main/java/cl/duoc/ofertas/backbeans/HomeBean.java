@@ -116,7 +116,7 @@ public class HomeBean implements Serializable {
     public String cambiarPagina(String param) throws IOException {
         listarOfertas();
         listaOfertasFiltradas = listaOfertas;
-        return param;
+        return param+"?faces-redirect=true";
     }
 
     public List<Tienda> listarTiendas() {

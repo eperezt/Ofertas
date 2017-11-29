@@ -14,15 +14,13 @@ import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.apache.log4j.Logger;
 
 /**
  *
- * @author Esteban Perez
+ * @author Esteban Perez, Mauricio Toro
  */
 @Stateless
 public class OfertaFacade extends AbstractFacade<Oferta> implements OfertaFacadeLocal {
