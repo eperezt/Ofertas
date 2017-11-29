@@ -223,20 +223,20 @@ body, html {
 }
 
 ::-webkit-input-placeholder {
-	color: gray !important;
-	font-weight: normal !important;
+    color: gray !important;
+    font-weight: normal !important;
 }
 
 /** firefox **/
 :-moz-placeholder {
-	color: gray !important;
-	font-weight: normal !important;
+    color: gray !important;
+    font-weight: normal !important;
 }
 
 /** IE **/
 .ui-watermark {
-	color: gray !important;
-	font-weight: normal !important;
+    color: gray !important;
+    font-weight: normal !important;
 }
 .ui-button-text-only .ui-button-text {
     padding: .3em 1em;
@@ -248,4 +248,9 @@ body, html {
 
 .titulo {
     text-align: center;
+}
+
+img{
+    max-width: 100%;
+    height:auto;
 }
