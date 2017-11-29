@@ -219,7 +219,8 @@ public class HomeBean implements Serializable {
             if (filtro.isEmpty()
                     && (this.rubroSeleccionado == null || this.rubroSeleccionado.equals("Todos"))
                     && (this.empresaSeleccionada == null || this.empresaSeleccionada.equals("Todas"))) {
-                nuevoFiltro = listaOfertas;
+                //nuevoFiltro = listaOfertas;
+                nuevoFiltro = ofertaFacade.findAllPublicadas();
             } else if (filtro.isEmpty()
                     && (this.rubroSeleccionado != null && !rubroSeleccionado.equals("Todos"))
                     && (this.empresaSeleccionada == null || this.empresaSeleccionada.equals("Todas"))) {

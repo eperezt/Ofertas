@@ -44,7 +44,7 @@ and open the template in the editor.
                                     <f:selectItems value="#{homeBean.listaEmpresas}"/>                        
                                 </h:selectOneMenu> 
 
-                                <h:outputLabel for="somRubros" value="Rubro:" />
+                                <h:outputLabel for="somRubros" value="Categoría:" />
                                 <h:selectOneMenu id="somRubros" value = "#{homeBean.rubroSeleccionado}"> 
                                     <f:selectItem itemLabel="Todos" itemValue=""/>
                                     <f:selectItems value="#{homeBean.listaRubros}"/>                        
@@ -60,7 +60,7 @@ and open the template in the editor.
                     </h:form>
                 </div>
                 <p:dataGrid id="grid" var="oferta" value="#{homeBean.listaOfertasFiltradas}" columns="3" layout="grid"
-                            rows="4" paginator="true" style="margin-top:20px">
+                            rows="4" paginator="true" style="margin-top:20px" emptyMessage="No existen Ofertas para listar.">
                     <f:facet name="header">
                         Ofertas
                     </f:facet>
