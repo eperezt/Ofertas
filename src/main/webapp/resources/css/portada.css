@@ -21,7 +21,8 @@ titulo {
 }
 
 footer{
-    background: #ff8f04;
+    /*background: #ff8f04;*/
+    background: orange;
     height: 3vh;
     position: fixed;
     left: 0px;
@@ -33,7 +34,8 @@ header {
     position: fixed;
     top:0px;
     left: 0px;
-    background: #ff8f04;
+    /*background: #ff8f04;*/
+    background: orange;
     color: #fff;
     height: 3vh;
     display: flex;
