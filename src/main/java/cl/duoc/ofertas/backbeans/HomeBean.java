@@ -39,26 +39,7 @@ public class HomeBean implements Serializable {
 
     @EJB
     private RubroFacadeLocal rubroFacade;
-
-    public OfertaFacadeLocal getOfertaFacade() {
-        return ofertaFacade;
-    }
-
-    public void setOfertaFacade(OfertaFacadeLocal ofertaFacade) {
-        this.ofertaFacade = ofertaFacade;
-    }
-
-//    @EJB
-//    private RubroFacade rubroFacade;
-//    @EJB
-//    private OfertaFacade ofertaFacade;
-
-    /* MTP 
-     * Esta página necesita:
-     * * Formulario de filtración con:
-     * * * Lista según empresa : la obtiene desde BD - Tabla tiendas.
-     * * * 
-     */
+    
     private final static Logger logger = Logger.getLogger(HomeBean.class);
     private String empresaSeleccionada;
     private String rubroSeleccionado;
@@ -70,16 +51,6 @@ public class HomeBean implements Serializable {
 
     public HomeBean() throws IOException, SQLException {
 
-    }
-
-    public void ordenarSegunValoracion() {
-
-    }
-
-    public String cambiarPagina(String param) throws IOException {
-        listarOfertas();
-        listaOfertasFiltradas = listaOfertas;
-        return param;
     }
 
     public List<Oferta> getListaOfertasFiltradas() {
@@ -137,6 +108,16 @@ public class HomeBean implements Serializable {
     public void setRubroSeleccionado(String rubroSeleccionado) {
         this.rubroSeleccionado = rubroSeleccionado;
     }
+    
+    public void ordenarSegunValoracion() {
+
+    }
+
+    public String cambiarPagina(String param) throws IOException {
+        listarOfertas();
+        listaOfertasFiltradas = listaOfertas;
+        return param;
+    }
 
     public List<Tienda> listarTiendas() {
         List<Tienda> lista = null;
@@ -150,7 +131,6 @@ public class HomeBean implements Serializable {
             context.addMessage("growl", message);
         }
         return lista;
-//        return (List<Tienda>) lista;
     }
 
     public List<String> listarEmpresas(List<Tienda> tiendas) {
@@ -173,7 +153,6 @@ public class HomeBean implements Serializable {
     private void listarOfertas() {
         try {
             this.listaOfertas = ofertaFacade.findAllPublicadas();
-            //this.listaOfertasFiltradas = this.listaOfertas;
         } catch (Exception e) {
             logger.error("Error obteniendo ofertas." + e.getMessage(), e);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error obteniendo ofertas.", "Error grave obteniendo ofertas.");
@@ -256,9 +235,9 @@ public class HomeBean implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            this.listaOfertas = new ArrayList<Oferta>();
+            this.listaOfertas = new ArrayList<>();
             this.listaEmpresas = new ArrayList<>();
-            this.listaRubros = new ArrayList<String>();
+            this.listaRubros = new ArrayList<>();
             this.rubroSeleccionado = "Todos";
             this.empresaSeleccionada = "Todas";
             
