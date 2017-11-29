@@ -5,7 +5,9 @@
  */
 package cl.duoc.ofertas.facade;
 
+import cl.duoc.ofertas.entities.Descuento;
 import cl.duoc.ofertas.entities.Oferta;
+import cl.duoc.ofertas.entities.Producto;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.apache.log4j.Logger;
 
@@ -79,12 +82,20 @@ public class OfertaFacade extends AbstractFacade<Oferta> implements OfertaFacade
     @Override
     public List<Oferta> findAllPublicadas() {
         List<Oferta> listaOfertas = null;
-        TypedQuery<Oferta> consulta = null;
-        
+        Query consulta = null;
+
         try {
             listaOfertas = new ArrayList<>();
-            consulta = em.createNamedQuery("Oferta.findAllPublicadas", Oferta.class);
-            listaOfertas = consulta.getResultList();
+            consulta = em.createQuery("SELECT o, p, d FROM Oferta o INNER JOIN Producto p ON p=o.productoIdproducto INNER JOIN Descuento d ON d.productoIdproducto=p WHERE o.ispublicada = 1");
+            for (Object obj : consulta.getResultList()) {
+                Oferta oferta = (Oferta) ((Object[]) obj)[0];
+                Producto producto = (Producto) ((Object[]) obj)[1];
+                Descuento descuento = (Descuento) ((Object[]) obj)[2];
+
+                producto.setDescuento(descuento);
+                oferta.setProductoIdproducto(producto);
+                listaOfertas.add(oferta);
+            }
             if (listaOfertas.isEmpty()) {
                 throw new Exception("No hay ofertas disponibles.");
             }
@@ -94,7 +105,7 @@ public class OfertaFacade extends AbstractFacade<Oferta> implements OfertaFacade
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("growl", message);
         }
-        
+
         return listaOfertas;
     }
 }

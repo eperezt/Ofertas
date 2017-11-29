@@ -12,6 +12,8 @@ import cl.duoc.ofertas.facade.RubroFacadeLocal;
 import cl.duoc.ofertas.facade.TiendaFacadeLocal;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,7 @@ public class HomeBean implements Serializable {
 
     @EJB
     private RubroFacadeLocal rubroFacade;
-    
+
     private final static Logger logger = Logger.getLogger(HomeBean.class);
     private String empresaSeleccionada;
     private String rubroSeleccionado;
@@ -108,7 +110,7 @@ public class HomeBean implements Serializable {
     public void setRubroSeleccionado(String rubroSeleccionado) {
         this.rubroSeleccionado = rubroSeleccionado;
     }
-    
+
     public void ordenarSegunValoracion() {
 
     }
@@ -116,7 +118,7 @@ public class HomeBean implements Serializable {
     public String cambiarPagina(String param) throws IOException {
         listarOfertas();
         listaOfertasFiltradas = listaOfertas;
-        return param+"?faces-redirect=true";
+        return param + "?faces-redirect=true";
     }
 
     public List<Tienda> listarTiendas() {
@@ -175,6 +177,41 @@ public class HomeBean implements Serializable {
         return this.listaRubros;
     }
 
+    public String calcularPrecioOferta(BigInteger precio, BigInteger isPorcentaje, BigInteger isPrecioDirecto, BigDecimal descuento, BigInteger precioDescuento) {
+        String respuesta = "";
+        try {
+            if (isPorcentaje.intValue() == 1) {
+                respuesta = String.valueOf(precio.intValue() - ((precio.intValue() * descuento.intValue()) / 100));
+            } else if (isPrecioDirecto.intValue() == 1) {
+                respuesta = String.valueOf(precio.intValue() - precioDescuento.intValue());
+            } else {
+                throw new Exception("Error obteniendo valor de descuento oferta.");
+            }
+        } catch (Exception e) {
+            logger.error("Error obteniendo valor." + e.getMessage(), e);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error obteniendo valor.", "Error grave obteniendo valor.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("growl", message);
+        }
+
+        return respuesta;
+    }
+
+//    public String calcularPrecioOferta(BigInteger precio, BigDecimal descuento) {
+//        return String.valueOf(precio.intValue() - ((precio.intValue() * descuento.intValue()) / 100));
+//    }
+//    public String checkIntegerBoolean(Oferta oferta) {
+//        String respuesta = "";
+//        try {
+////            respuesta = valor.intValue() == 1 ? "true" : "false";
+//        } catch (Exception e) {
+//            logger.error("Error obteniendo valor." + e.getMessage(), e);
+//            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error obteniendo valor.", "Error grave obteniendo valor.");
+//            FacesContext context = FacesContext.getCurrentInstance();
+//            context.addMessage("growl", message);
+//        }
+//        return respuesta;
+//    }
     public void filterList() {
         List<Oferta> nuevoFiltro = new ArrayList<>();
         listaOfertasFiltradas = listaOfertas;
@@ -240,12 +277,12 @@ public class HomeBean implements Serializable {
             this.listaRubros = new ArrayList<>();
             this.rubroSeleccionado = "Todos";
             this.empresaSeleccionada = "Todas";
-            
+
             listarOfertas();
             listarEmpresas(listarTiendas());
             listarRubros();
             //ordenarSegunValoracion();            
-            
+
             this.listaOfertasFiltradas = listaOfertas;
         } catch (Exception e) {
             logger.error("No hay ofertas disponibles.", e);

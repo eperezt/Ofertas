@@ -49,7 +49,8 @@ import org.primefaces.model.StreamedContent;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Oferta.findAll", query = "SELECT o FROM Oferta o")
-    , @NamedQuery(name = "Oferta.findAllPublicadas", query = "SELECT o FROM Oferta o WHERE o.ispublicada = 1")
+//    , @NamedQuery(name = "Oferta.findAllPublicadas", query = "SELECT o FROM Oferta o WHERE o.ispublicada = 1")
+    , @NamedQuery(name = "Oferta.findAllPublicadas", query = "SELECT o, p, d FROM Oferta o INNER JOIN Producto p ON p.idproducto=o.productoIdproducto INNER JOIN Descuento d ON d.productoIdproducto=p.idproducto WHERE o.ispublicada = 1")
     , @NamedQuery(name = "Oferta.findByIdoferta", query = "SELECT o FROM Oferta o WHERE o.idoferta = :idoferta")
     , @NamedQuery(name = "Oferta.findByFechainicio", query = "SELECT o FROM Oferta o WHERE o.fechainicio = :fechainicio")
     , @NamedQuery(name = "Oferta.findByFechafin", query = "SELECT o FROM Oferta o WHERE o.fechafin = :fechafin")
