@@ -16,7 +16,26 @@ and open the template in the editor.
         <h:outputStylesheet name="login.css" library="css" />
     </h:head>
     <h:body>
-        <div class="header"><h2>OFERTAS RETAIL</h2></div>
+        <div class="header">
+            <h2>OFERTAS RETAIL</h2>
+        </div>
+        <h:form>
+            <p:growl id="messages" showDetail="false"/>
+            <p:menubar>
+                <f:facet name="user">
+                    <h:outputLabel value="Bienvenido"/>
+                </f:facet>
+                <f:facet name="options">
+                    <c:if test="${loginBean.usuarioSesionado.consumidor != null}">
+                        <h:outputText value="Bienvenido! : ${loginBean.usuarioSesionado.consumidor.nombre.trim()} ${loginBean.usuarioSesionado.consumidor.apellidopaterno.trim()}    "/>
+                    </c:if>
+                    <c:if test="${loginBean.usuarioSesionado.trabajador != null}">
+                        <h:outputText value="Bienvenido! : ${loginBean.usuarioSesionado.trabajador.nombre.trim()} ${loginBean.usuarioSesionado.trabajador.apellidopaterno.trim()}    "/>
+                    </c:if>
+                    <p:commandButton value="Cerrar Sesion" icon="ui-icon-extlink" action="#{loginBean.logoutListener}" />
+                </f:facet>
+            </p:menubar>
+        </h:form>
         <p:layout style="min-width:400px;min-height:800px;">
             <p:layoutUnit position="west" resizable="false" size="210" minSize="200" maxSize="350">
                 <h:form>  

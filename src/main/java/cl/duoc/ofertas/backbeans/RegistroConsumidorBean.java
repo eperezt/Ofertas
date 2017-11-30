@@ -21,9 +21,9 @@ import java.math.BigInteger;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
@@ -33,7 +33,7 @@ import org.primefaces.context.RequestContext;
  *
  * @author Esteban Perez
  */
-@Named(value = "registroConsumidorBean")
+@ManagedBean(name="registroConsumidorBean")
 @ViewScoped
 public class RegistroConsumidorBean implements Serializable {
 

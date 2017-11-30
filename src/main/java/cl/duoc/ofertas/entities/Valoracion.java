@@ -60,17 +60,14 @@ public class Valoracion implements Serializable {
     @Column(name = "FECHACREACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechacreacion;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "valoracionIdvaloracion")
-    private Punto punto;
     @JoinColumn(name = "OFERTA_IDOFERTA", referencedColumnName = "IDOFERTA")
     @ManyToOne
     private Oferta ofertaIdoferta;
-    @JoinColumn(name = "PUNTO_IDPUNTO", referencedColumnName = "IDPUNTO")
-    @OneToOne(optional = false)
-    private Punto puntoIdpunto;
     @JoinColumn(name = "USUARIO_IDUSUARIO", referencedColumnName = "IDUSUARIO")
     @ManyToOne(optional = false)
     private Usuario usuarioIdusuario;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "valoracionIdvaloracion")
+    private Punto punto;
 
     public Valoracion() {
     }
@@ -119,14 +116,6 @@ public class Valoracion implements Serializable {
         this.fechacreacion = fechacreacion;
     }
 
-    public Punto getPunto() {
-        return punto;
-    }
-
-    public void setPunto(Punto punto) {
-        this.punto = punto;
-    }
-
     public Oferta getOfertaIdoferta() {
         return ofertaIdoferta;
     }
@@ -135,20 +124,20 @@ public class Valoracion implements Serializable {
         this.ofertaIdoferta = ofertaIdoferta;
     }
 
-    public Punto getPuntoIdpunto() {
-        return puntoIdpunto;
-    }
-
-    public void setPuntoIdpunto(Punto puntoIdpunto) {
-        this.puntoIdpunto = puntoIdpunto;
-    }
-
     public Usuario getUsuarioIdusuario() {
         return usuarioIdusuario;
     }
 
     public void setUsuarioIdusuario(Usuario usuarioIdusuario) {
         this.usuarioIdusuario = usuarioIdusuario;
+    }
+
+    public Punto getPunto() {
+        return punto;
+    }
+
+    public void setPunto(Punto punto) {
+        this.punto = punto;
     }
 
     @Override

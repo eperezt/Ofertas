@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -60,8 +59,6 @@ public class Punto implements Serializable {
     @JoinColumn(name = "VALORACION_IDVALORACION", referencedColumnName = "IDVALORACION")
     @OneToOne(optional = false)
     private Valoracion valoracionIdvaloracion;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "puntoIdpunto")
-    private Valoracion valoracion;
 
     public Punto() {
     }
@@ -116,14 +113,6 @@ public class Punto implements Serializable {
 
     public void setValoracionIdvaloracion(Valoracion valoracionIdvaloracion) {
         this.valoracionIdvaloracion = valoracionIdvaloracion;
-    }
-
-    public Valoracion getValoracion() {
-        return valoracion;
-    }
-
-    public void setValoracion(Valoracion valoracion) {
-        this.valoracion = valoracion;
     }
 
     @Override

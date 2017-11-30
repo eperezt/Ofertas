@@ -6,7 +6,6 @@
 package cl.duoc.ofertas.backbeans;
 
 import cl.duoc.ofertas.constantes.Constantes;
-import cl.duoc.ofertas.entities.Oferta;
 import cl.duoc.ofertas.entities.Usuario;
 import cl.duoc.ofertas.facade.UsuarioFacadeLocal;
 import cl.duoc.wsofertas.ws.LoginRequestVO;
@@ -14,30 +13,23 @@ import cl.duoc.wsofertas.ws.LoginResponseVO;
 import cl.duoc.wsofertas.ws.OfertasWS;
 import cl.duoc.wsofertas.ws.OfertasWS_Service;
 import java.io.IOException;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
-import org.primefaces.model.StreamedContent;
 
 /**
  *
  * @author Esteban Perez
  */
+@ManagedBean(name="loginBean")
 @SessionScoped
-@Named(value = "loginBean")
 public class LoginBean implements Serializable {
 
     @EJB
@@ -120,7 +112,7 @@ public class LoginBean implements Serializable {
             session.invalidate();
             this.setIsLogged(false);
             this.setUsuarioSesionado(null);
-            return "/index";
+            return "/index.xhtml?faces-redirect=true";
         } catch (Exception e) {
             logger.error("Error grave procesando Logout.", e);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error grave al procesar Logout.", "Error grave procesando Logout.");

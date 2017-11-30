@@ -11,14 +11,15 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.enterprise.context.ApplicationScoped;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author Esteban Perez
  */
-@Named(value = "genericServiceBean")
+//@Named(value = "genericServiceBean")
+@ManagedBean(name="genericServiceBean")
 @ApplicationScoped
 public class GenericServiceBean implements Serializable{
 

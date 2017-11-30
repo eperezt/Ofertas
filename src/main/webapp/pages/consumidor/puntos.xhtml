@@ -6,6 +6,11 @@
     <h:body>
         <ui:composition template="/pages/templates/commonLayout.xhtml">
             <ui:define name="content">
+                <h:outputStylesheet name="default.css" library="css" />
+                <h:outputStylesheet name="login.css" library="css" />
+                <div class="header">
+                    <h2>OFERTAS RETAIL</h2>
+                </div>
                 <p:layout>
                     <p:layoutUnit position="west" resizable="false" size="210" minSize="200" maxSize="350">
                         <h:form>  
@@ -21,11 +26,12 @@
                     <p:layoutUnit position="center">
                         <div>
                             <h2>Tus puntos acumulados</h2>
-                            <p>Actualmente posees: puntos acumulados.</p>
+                            <p>Actualmente posees: <h:outputText value="#{puntosBean.puntos}"/> puntos acumulados.</p>
                             <p>Para canjear tus puntos, imprime tu cupón de descuento y muéstralo en tu tienda asociada.</p>
                         </div>
                     </p:layoutUnit>
                 </p:layout>
+                <div class="footer"></div>
             </ui:define>
         </ui:composition>
 

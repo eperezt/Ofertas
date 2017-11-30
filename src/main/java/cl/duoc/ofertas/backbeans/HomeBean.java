@@ -19,8 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.apache.log4j.Logger;
@@ -29,8 +30,9 @@ import org.apache.log4j.Logger;
  *
  * @author Mauricio Toro
  */
+//@Named(value = "homeBean")
+@ManagedBean(name="homeBean")
 @SessionScoped
-@Named(value = "homeBean")
 public class HomeBean implements Serializable {
 
     @EJB

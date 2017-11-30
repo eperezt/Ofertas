@@ -3,13 +3,45 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <script type="text/javascript">
+            function start() {
+                PF('statusDialog').show();
+            }
+
+            function stop() {
+                PF('statusDialog').hide();
+            }
+        </script>
+    </h:head>
     <h:body>
         <ui:composition template="/pages/templates/commonLayout.xhtml">
             <ui:define name="content">
+                <h:outputStylesheet name="default.css" library="css" />
+                <h:outputStylesheet name="login.css" library="css" />
+                <div class="header">
+                    <h2>OFERTAS RETAIL</h2>
+                </div>
+                <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
+                    <p:graphicImage url="/resources/images/ajax-loader.gif" />
+                </p:dialog>
+                <p:dialog header="Descarga de cupon" widgetVar="dlgDescargaCupon" id="dlgDescargaCupon" modal="true" width="30%" height="40%" closeOnEscape="true" maximizable="false" minimizable="false" resizable="false">
+                    <h:form>
+                        <div>
+                            <p>Cupón generado exitosamente.</p>
+                            <p>Para efectuar su descarga, realizar click en el botón Descargar PDF.</p>
+                        </div>
+                        <center>
+                            <p:commandButton value="Descargar PDF" ajax="false" icon="ui-icon-arrowthick-1-s">
+                                <p:fileDownload value="#{cuponDescuentoBean.cupon}" />
+                            </p:commandButton>
+                        </center>
+                    </h:form>
+                </p:dialog>  
                 <p:layout>
                     <p:layoutUnit position="west" resizable="false" size="210" minSize="200" maxSize="350">
                         <h:form>  
-                            <p:growl id="messages" showDetail="false"/>
+                            <p:growl id="growl" showDetail="false"/>
                             <h2 style="margin-top:20">Menu</h2>
                             <p:menu>
                                 <p:menuitem value="Lista de ofertas" action="#{homeBean.cambiarPagina('/pages/home/home')}"/>
@@ -26,23 +58,13 @@
                         </div>
                         <center>
                             <h:form class="form-signin">
-                                <p:commandButton id="btnCupon" value="Descargar PDF" actionListener="PF('dlgDescargaCupon').show();"/>
+                                <p:commandButton id="btnCupon" value="Generar Cupón de Descuento" actionListener="#{cuponDescuentoBean.generarCuponDescuento}"/>
                             </h:form>
                             <p:graphicImage url="/resources/images/CuponDescuento.png"/>
                         </center>
-                        <div>
-                            <p:dialog header="Descarga de cupon" widgetVar="dlgDescargaCupon" modal="true" width="30%" height="40%" closeOnEscape="true" maximizable="false" minimizable="false" resizable="false">
-                                <h:form>
-                                    <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder">
-                                        <!--Pendiente descarga-->
-                                        <p:commandButton value="Cancelar" type="button" onclick="PF('dlgDescargaCupon').hide();" id="btnCancelarDescargaCupon"/>
-                                        <p:commandButton value="Descargar" actionListener="#{cuponDescuentoBean.descargarCupon}" id="btnDescargarCupon"/>
-                                    </p:panelGrid>
-                                </h:form>
-                            </p:dialog>  
-                        </div>
                     </p:layoutUnit>
                 </p:layout>
+                <div class="footer"></div>
             </ui:define>
         </ui:composition>
 
