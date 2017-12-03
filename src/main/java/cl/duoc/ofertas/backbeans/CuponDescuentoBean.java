@@ -172,8 +172,8 @@ public class CuponDescuentoBean implements Serializable {
             }
 
         } catch (Exception e) {
-            logger.error("Error grave procesando Login.", e);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error grave al procesar Login.", "Error grave procesando Login.");
+            logger.error("Error grave generando cupon de descuento.", e);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error grave al generar cupón de descuento.", "Error: Se ha encontrado un error grave al generar cupón de descuento.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("growl", message);
         }
