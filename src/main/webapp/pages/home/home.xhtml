@@ -27,10 +27,10 @@ and open the template in the editor.
                 </f:facet>
                 <f:facet name="options">
                     <c:if test="${loginBean.usuarioSesionado.consumidor != null}">
-                        <h:outputText value="Bienvenido! : ${loginBean.usuarioSesionado.consumidor.nombre.trim()} ${loginBean.usuarioSesionado.consumidor.apellidopaterno.trim()}    "/>
+                        <h:outputText value="Bienvenido(a)! : ${loginBean.usuarioSesionado.consumidor.nombre.trim()} ${loginBean.usuarioSesionado.consumidor.apellidopaterno.trim()}    "/>
                     </c:if>
                     <c:if test="${loginBean.usuarioSesionado.trabajador != null}">
-                        <h:outputText value="Bienvenido! : ${loginBean.usuarioSesionado.trabajador.nombre.trim()} ${loginBean.usuarioSesionado.trabajador.apellidopaterno.trim()}    "/>
+                        <h:outputText value="Bienvenido(a)! : ${loginBean.usuarioSesionado.trabajador.nombre.trim()} ${loginBean.usuarioSesionado.trabajador.apellidopaterno.trim()}    "/>
                     </c:if>
                     <p:commandButton value="Cerrar Sesion" icon="ui-icon-extlink" action="#{loginBean.logoutListener}" />
                 </f:facet>
