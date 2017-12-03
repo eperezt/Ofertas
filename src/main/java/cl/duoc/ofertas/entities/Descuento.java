@@ -159,5 +159,5 @@ public class Descuento implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Descuento[ iddescuento=" + iddescuento + " ]";
     }
-    
+
 }

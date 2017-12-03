@@ -227,5 +227,5 @@ public class Producto implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Producto[ idproducto=" + idproducto + " ]";
     }
-    
+
 }

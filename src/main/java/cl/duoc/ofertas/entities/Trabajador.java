@@ -251,5 +251,5 @@ public class Trabajador implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Trabajador[ idtrabajador=" + idtrabajador + " ]";
     }
-    
+
 }

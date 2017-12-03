@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
  */
 @Stateless
 public class ConsumidorFacade extends AbstractFacade<Consumidor> implements ConsumidorFacadeLocal {
-    
+
     private final static Logger logger = Logger.getLogger(ConsumidorFacade.class);
 
     @PersistenceContext(unitName = "cl.duoc_Ofertas_war_1.0-SNAPSHOTPU")
@@ -40,7 +40,7 @@ public class ConsumidorFacade extends AbstractFacade<Consumidor> implements Cons
     @Override
     public void crearConsumidorUsuario(Usuario usuario, Consumidor consumidor) {
         StoredProcedureQuery storedProcedure = null;
-        try{
+        try {
             storedProcedure = em.createStoredProcedureQuery("sp_crea_usuario_consumidor");
             storedProcedure.registerStoredProcedureParameter("RUTPARAM", BigInteger.class, ParameterMode.IN);
             storedProcedure.registerStoredProcedureParameter("DVPARAM", Character.class, ParameterMode.IN);
@@ -74,14 +74,14 @@ public class ConsumidorFacade extends AbstractFacade<Consumidor> implements Cons
             storedProcedure.setParameter("ISACTIVOUSUPARAM", usuario.getIsactivo());
             storedProcedure.setParameter("IDSESSIONPARAM", usuario.getIdsession());
             storedProcedure.setParameter("IDPERFILPARAM", usuario.getPerfilIdperfil().getIdperfil());
-            
+
             storedProcedure.execute();
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             logger.error("Error grave creando consumidor.", ex);
             throw new RuntimeException(ex);
-        }finally{
+        } finally {
             storedProcedure = null;
         }
-    }   
+    }
 }

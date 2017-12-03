@@ -28,5 +28,5 @@ public class CuponFacade extends AbstractFacade<Cupon> implements CuponFacadeLoc
     public CuponFacade() {
         super(Cupon.class);
     }
-    
+
 }

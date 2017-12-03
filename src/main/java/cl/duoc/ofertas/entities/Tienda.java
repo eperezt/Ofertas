@@ -217,5 +217,5 @@ public class Tienda implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Tienda[ idtienda=" + idtienda + " ]";
     }
-    
+
 }

@@ -83,8 +83,9 @@ and open the template in the editor.
                     <f:facet name="header">
                         Ofertas
                     </f:facet>
+
                     <p:panel header="#{oferta.productoIdproducto.nombre}" style="text-align:center">
-                        <h:panelGrid columns="1" style="width:100%">
+                        <h:panelGrid columns="1" style="width:100%" onclick="PF('dlgValoracion').show();">
                             <p:graphicImage value="#{imageStreamer.image}">
                                 <f:param name="id" value="#{oferta.idoferta}" />
                             </p:graphicImage>
@@ -96,7 +97,53 @@ and open the template in the editor.
                     </p:panel>
                 </p:dataGrid>
             </p:layoutUnit>
-        </p:layout>                
+        </p:layout>       
+        <p:dialog 
+            widgetVar="dlgValoracion" modal="true" 
+            width="25%" height="80%" 
+            closeOnEscape="true" maximizable="false" minimizable="false" resizable="false"
+            style="text-align: center">
+            <h:form>
+                <p:growl id="growl" sticky="true" showDetail="false" life="3000"/>
+                <h:outputText value="¡Valora tu oferta, consigue puntos y obtén cupones de descuento cada mes!" style="text-align: center; font-weight: bold;font-size: 24px"/>
+                <br/>
+                <br/>
+                <h:outputText value="Tan solo sigue los pasos indicados abajo." style="text-align: center;font-size: 14px"/>
+                <br/>
+                <br/>
+                <h:outputText value="Sube una imagen de tu boleta" style="font-weight: bold;font-size: 14px"/>
+                <br/>
+                <h:form enctype="multipart/form-data">
+                    <p:growl id="messages" showDetail="true" />
+                    <p:fileUpload value="#{homeBean.file}" mode="simple" skinSimple="true" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="2000000" label="Selecciona un archivo..."/>
+                </h:form>
+                <br/>
+                <h:outputText value="¡Valoriza esta oferta!" style="font-size: 14px"/>
+                <br/>
+                <br/>
+                <h:form>
+                    <p:growl id="messages" showDetail="true"/>
+                    <p:rating value="#{homeBean.rating}" stars="3" cancel="false" style="height: 2vh">
+                        <p:ajax event="rate" listener="#{homeBean.onrate}" update="messages" />
+                    </p:rating>
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                    </h:panelGrid>
+                </h:form>
+                <br/>
+                <br/>
+                <h:outputText value="¿Quieres saber cómo funciona?" style="text-align: center;font-size: 14px"/>
+                <br/>
+                <br/>
+                <h:outputText value="Haz click aquí" style="text-align: center;font-size: 14px"/>
+                <br/>
+                <br/>
+
+
+                <p:commandButton value="Cancelar" type="button" onclick="PF('dlgValoracion').hide();" id="btnCancelarValoracion"/>
+                <p:commandButton value="¡Valoriza!" id="btnAceptarValoracion" update="growl" actionListener="#{homeBean.valorizar(oferta)}" styleClass="ui-priority-primary" />
+            </h:form>
+        </p:dialog>
         <div class="footer"></div>
     </h:body>
 </html>

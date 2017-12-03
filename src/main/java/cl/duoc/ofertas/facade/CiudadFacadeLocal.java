@@ -29,7 +29,7 @@ public interface CiudadFacadeLocal {
     List<Ciudad> findRange(int[] range);
 
     int count();
-    
+
     public List<Ciudad> getCiudadesActivas();
-    
+
 }

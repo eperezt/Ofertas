@@ -29,5 +29,5 @@ public interface FuncionalidadFacadeLocal {
     List<Funcionalidad> findRange(int[] range);
 
     int count();
-    
+
 }

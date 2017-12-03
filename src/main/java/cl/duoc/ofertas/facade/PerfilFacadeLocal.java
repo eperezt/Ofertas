@@ -29,5 +29,5 @@ public interface PerfilFacadeLocal {
     List<Perfil> findRange(int[] range);
 
     int count();
-    
+
 }

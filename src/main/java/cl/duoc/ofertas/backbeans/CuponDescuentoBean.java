@@ -30,7 +30,7 @@ import org.primefaces.model.StreamedContent;
 
 /**
  *
- * @author Colipavo
+ * @author Mauricio
  */
 @ManagedBean(name = "cuponDescuentoBean")
 @ViewScoped

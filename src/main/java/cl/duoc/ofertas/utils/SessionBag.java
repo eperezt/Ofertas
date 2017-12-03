@@ -14,6 +14,6 @@ import java.util.List;
  * @author Esteban Perez
  */
 public class SessionBag {
-    
+
     public static List<Usuario> listaUsuarioSesionados = new ArrayList<>();
 }

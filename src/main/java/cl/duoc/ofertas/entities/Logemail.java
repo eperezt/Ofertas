@@ -118,5 +118,5 @@ public class Logemail implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Logemail[ idlogcorreo=" + idlogcorreo + " ]";
     }
-    
+
 }

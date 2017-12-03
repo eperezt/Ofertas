@@ -28,5 +28,5 @@ public class TrabajadorFacade extends AbstractFacade<Trabajador> implements Trab
     public TrabajadorFacade() {
         super(Trabajador.class);
     }
-    
+
 }

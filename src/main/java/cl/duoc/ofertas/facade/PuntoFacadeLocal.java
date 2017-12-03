@@ -6,6 +6,7 @@
 package cl.duoc.ofertas.facade;
 
 import cl.duoc.ofertas.entities.Punto;
+import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -27,7 +28,9 @@ public interface PuntoFacadeLocal {
     List<Punto> findAll();
 
     List<Punto> findRange(int[] range);
+    
+    List<Punto> findAllByUsuario(BigInteger id);
 
     int count();
-    
+
 }

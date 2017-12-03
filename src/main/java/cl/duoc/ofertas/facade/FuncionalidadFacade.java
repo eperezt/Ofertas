@@ -28,5 +28,5 @@ public class FuncionalidadFacade extends AbstractFacade<Funcionalidad> implement
     public FuncionalidadFacade() {
         super(Funcionalidad.class);
     }
-    
+
 }

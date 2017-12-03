@@ -30,6 +30,6 @@ public interface ConsumidorFacadeLocal {
     List<Consumidor> findRange(int[] range);
 
     int count();
-    
+
     public void crearConsumidorUsuario(Usuario usuario, Consumidor consumidor);
 }

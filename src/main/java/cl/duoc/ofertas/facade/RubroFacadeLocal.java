@@ -29,6 +29,6 @@ public interface RubroFacadeLocal {
     List<Rubro> findRange(int[] range);
 
     int count();
-    
+
     List<Rubro> findByCantidadValoraciones();
 }

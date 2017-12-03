@@ -223,5 +223,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Usuario[ idusuario=" + idusuario + " ]";
     }
-    
+
 }

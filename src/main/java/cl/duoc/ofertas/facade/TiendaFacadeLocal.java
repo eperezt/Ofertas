@@ -29,5 +29,5 @@ public interface TiendaFacadeLocal {
     List<Tienda> findRange(int[] range);
 
     int count();
-    
+
 }

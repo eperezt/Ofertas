@@ -29,5 +29,5 @@ public interface CuponFacadeLocal {
     List<Cupon> findRange(int[] range);
 
     int count();
-    
+
 }

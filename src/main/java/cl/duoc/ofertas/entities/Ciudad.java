@@ -137,5 +137,5 @@ public class Ciudad implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Ciudad[ idciudad=" + idciudad + " ]";
     }
-    
+
 }

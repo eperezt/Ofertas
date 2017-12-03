@@ -181,5 +181,5 @@ public class Funcionalidad implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Funcionalidad[ idfuncionalidad=" + idfuncionalidad + " ]";
     }
-    
+
 }

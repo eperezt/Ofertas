@@ -5,7 +5,6 @@
  */
 package cl.duoc.ofertas.backbeans;
 
-
 import cl.duoc.ofertas.entities.Oferta;
 import cl.duoc.ofertas.facade.OfertaFacade;
 import cl.duoc.ofertas.facade.OfertaFacadeLocal;
@@ -30,14 +29,13 @@ public class ImageStreamer {
 
     @EJB
     private OfertaFacadeLocal service;
-    
+
     public StreamedContent getImage() throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();
 
         if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
             return new DefaultStreamedContent();
-        }
-        else {
+        } else {
             String id = context.getExternalContext().getRequestParameterMap().get("id");
             Oferta oferta = service.find(id);
             return new DefaultStreamedContent(new ByteArrayInputStream(oferta.getFotografia()));

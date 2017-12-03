@@ -247,5 +247,5 @@ public class Consumidor implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Consumidor[ idconsumidor=" + idconsumidor + " ]";
     }
-    
+
 }

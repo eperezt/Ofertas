@@ -29,5 +29,5 @@ public interface TrabajadorFacadeLocal {
     List<Trabajador> findRange(int[] range);
 
     int count();
-    
+
 }

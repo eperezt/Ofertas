@@ -28,5 +28,5 @@ public class DescuentoFacade extends AbstractFacade<Descuento> implements Descue
     public DescuentoFacade() {
         super(Descuento.class);
     }
-    
+
 }

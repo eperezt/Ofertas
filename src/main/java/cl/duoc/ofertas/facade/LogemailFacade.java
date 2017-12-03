@@ -28,5 +28,5 @@ public class LogemailFacade extends AbstractFacade<Logemail> implements Logemail
     public LogemailFacade() {
         super(Logemail.class);
     }
-    
+
 }

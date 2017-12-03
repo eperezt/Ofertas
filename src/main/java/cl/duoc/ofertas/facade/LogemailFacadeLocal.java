@@ -29,5 +29,5 @@ public interface LogemailFacadeLocal {
     List<Logemail> findRange(int[] range);
 
     int count();
-    
+
 }

@@ -179,5 +179,5 @@ public class Cupon implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Cupon[ idcupon=" + idcupon + " ]";
     }
-    
+
 }

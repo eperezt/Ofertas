@@ -166,5 +166,5 @@ public class Perfil implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Perfil[ idperfil=" + idperfil + " ]";
     }
-    
+
 }

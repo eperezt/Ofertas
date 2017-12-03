@@ -17,10 +17,10 @@ public class Constantes {
 
     //Nombres Bean
     public static final String NOMBRE_LOGIN_BEAN = "loginBean";
-    
+
     public static final String URL_LOGIN = "/faces/index.xhtml";
-    
+
     public static final String CIFRADO_SHA1 = "SHA1";
-    
+
     public static final int CODIGO_PERFIL_CONSUMIDOR = 3;
 }

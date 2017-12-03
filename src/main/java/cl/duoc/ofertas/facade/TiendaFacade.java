@@ -22,8 +22,7 @@ import org.apache.log4j.Logger;
  */
 @Stateless
 public class TiendaFacade extends AbstractFacade<Tienda> implements TiendaFacadeLocal {
-    
-    
+
     private final static Logger logger = Logger.getLogger(TiendaFacade.class);
 
     @PersistenceContext(unitName = "cl.duoc_Ofertas_war_1.0-SNAPSHOTPU")
@@ -37,11 +36,12 @@ public class TiendaFacade extends AbstractFacade<Tienda> implements TiendaFacade
     public TiendaFacade() {
         super(Tienda.class);
     }
+
     @Override
-    public List<Tienda> findAll(){
+    public List<Tienda> findAll() {
         List<Tienda> listaTiendas = null;
         TypedQuery<Tienda> consulta = null;
-        
+
         try {
             listaTiendas = new ArrayList<>();
             consulta = em.createNamedQuery("Tienda.findAll", Tienda.class);
@@ -55,8 +55,8 @@ public class TiendaFacade extends AbstractFacade<Tienda> implements TiendaFacade
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("growl", message);
         }
-        
+
         return listaTiendas;
     }
-    
+
 }

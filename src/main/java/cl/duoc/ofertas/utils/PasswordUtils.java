@@ -13,9 +13,9 @@ import org.apache.log4j.Logger;
  * @author Esteban Perez
  */
 public class PasswordUtils {
-    
+
     private final static Logger logger = Logger.getLogger(PasswordUtils.class);
-    
+
     public static String getHash(String txt, String hashType) {
         try {
             MessageDigest md = java.security.MessageDigest.getInstance(hashType);

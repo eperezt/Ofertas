@@ -29,6 +29,6 @@ public interface UsuarioFacadeLocal {
     List<Usuario> findRange(int[] range);
 
     int count();
-    
-    public Usuario obtenerUsuarioPorLogin(String loginUsuario);   
+
+    public Usuario obtenerUsuarioPorLogin(String loginUsuario);
 }

@@ -6,32 +6,41 @@
 package cl.duoc.ofertas.backbeans;
 
 import cl.duoc.ofertas.entities.Oferta;
+import cl.duoc.ofertas.entities.Punto;
 import cl.duoc.ofertas.entities.Tienda;
+import cl.duoc.ofertas.entities.Valoracion;
 import cl.duoc.ofertas.facade.OfertaFacadeLocal;
 import cl.duoc.ofertas.facade.RubroFacadeLocal;
 import cl.duoc.ofertas.facade.TiendaFacadeLocal;
+import cl.duoc.ofertas.facade.ValoracionFacadeLocal;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.apache.log4j.Logger;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.RateEvent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
  * @author Mauricio Toro
  */
 //@Named(value = "homeBean")
-@ManagedBean(name="homeBean")
+@ManagedBean(name = "homeBean")
 @SessionScoped
 public class HomeBean implements Serializable {
 
@@ -44,6 +53,12 @@ public class HomeBean implements Serializable {
     @EJB
     private RubroFacadeLocal rubroFacade;
 
+    @EJB
+    private ValoracionFacadeLocal valoracionFacade;
+    
+    @ManagedProperty(value = "#{loginBean}")
+    private LoginBean loginBean;
+
     private final static Logger logger = Logger.getLogger(HomeBean.class);
     private String empresaSeleccionada;
     private String rubroSeleccionado;
@@ -52,6 +67,9 @@ public class HomeBean implements Serializable {
     private List<Oferta> listaOfertas;
     private List<Oferta> listaOfertasFiltradas;
     private String filtro;
+    private UploadedFile file;
+    private Integer rating;
+    private Valoracion valoracion;
 
     public HomeBean() throws IOException, SQLException {
 
@@ -113,8 +131,46 @@ public class HomeBean implements Serializable {
         this.rubroSeleccionado = rubroSeleccionado;
     }
 
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public Valoracion getValoracion() {
+        return valoracion;
+    }
+
+    public void setValoracion(Valoracion valoracion) {
+        this.valoracion = valoracion;
+    }
+
+    public LoginBean getLoginBean() {
+        return loginBean;
+    }
+
+    public void setLoginBean(LoginBean loginBean) {
+        this.loginBean = loginBean;
+    }
+
     public void ordenarSegunValoracion() {
 
+    }
+
+    public void onrate(RateEvent rateEvent) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Valoración", "¡Has dado: " + ((Integer) rateEvent.getRating()).intValue() + " estrellas!");
+        this.valoracion.setNota(new BigInteger(rateEvent.getRating().toString()));
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     public String cambiarPagina(String param) throws IOException {
@@ -199,6 +255,28 @@ public class HomeBean implements Serializable {
         return respuesta;
     }
 
+    public void handleFileUpload(FileUploadEvent event) {
+        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public void valorizar(Oferta ofertaValorizada) {
+        if (this.file != null) {
+            FacesMessage message = new FacesMessage("Succesful", this.file.getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+            this.valoracion.setDetalle("Valoracion de oferta.");
+            this.valoracion.setFechacreacion(Date.from(Instant.now()));
+            this.valoracion.setFotografia(this.file.getContents());
+            this.valoracion.setUsuarioIdusuario(loginBean.getUsuarioSesionado());
+            this.valoracion.setOfertaIdoferta(ofertaValorizada);
+            Punto punto = new Punto();
+            punto.setCantidad(new BigInteger("10"));
+            punto.setFecha(Date.from(Instant.now()));
+            punto.setIscobrado(BigInteger.ZERO);
+            this.valoracionFacade.create(valoracion);
+        }
+    }
+
 //    public String calcularPrecioOferta(BigInteger precio, BigDecimal descuento) {
 //        return String.valueOf(precio.intValue() - ((precio.intValue() * descuento.intValue()) / 100));
 //    }
@@ -280,6 +358,7 @@ public class HomeBean implements Serializable {
             this.listaRubros = new ArrayList<>();
             this.rubroSeleccionado = "Todos";
             this.empresaSeleccionada = "Todas";
+            this.valoracion = new Valoracion();
 
             listarOfertas();
             listarEmpresas(listarTiendas());

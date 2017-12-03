@@ -26,13 +26,13 @@ public interface OfertaFacadeLocal {
     Oferta find(Object id);
 
     List<Oferta> findAll();
-    
+
     List<Oferta> findAllPublicadas();
 
     List<Oferta> findRange(int[] range);
 
     int count();
-    
+
     List<Oferta> findAllSortedByRubro(BigDecimal idRubro);
-    
+
 }

@@ -29,4 +29,12 @@ public class ValoracionFacade extends AbstractFacade<Valoracion> implements Valo
         super(Valoracion.class);
     }
     
+    @Override
+    public void create(Valoracion valoracion){
+        em.getTransaction().begin();
+        em.persist(valoracion);
+        em.getTransaction().commit();
+    }
+
+    
 }

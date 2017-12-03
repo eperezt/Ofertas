@@ -29,5 +29,5 @@ public interface DescuentoFacadeLocal {
     List<Descuento> findRange(int[] range);
 
     int count();
-    
+
 }
