@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -47,7 +48,8 @@ public class Punto implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "IDPUNTO")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(generator = "puntoSeq")
+    @SequenceGenerator(name = "puntoSeq", sequenceName = "SEQ_PUNTO", allocationSize = 1)
     private BigDecimal idpunto;
     @Column(name = "CANTIDAD")
     private BigInteger cantidad;
@@ -142,5 +144,5 @@ public class Punto implements Serializable {
     public String toString() {
         return "cl.duoc.ofertas.entities.Punto[ idpunto=" + idpunto + " ]";
     }
-    
+
 }

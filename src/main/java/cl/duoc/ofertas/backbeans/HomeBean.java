@@ -284,7 +284,7 @@ public class HomeBean implements Serializable {
             this.valoracion.setUsuarioIdusuario(loginBean.getUsuarioSesionado());
             this.valoracion.setOfertaIdoferta(this.ofertaSeleccionada);
             //this.valoracion.setFotografia(event.getFile().getContents()); //guardada al momento de escoger la imagen.
-//            this.valoracion.setNota(BigInteger.ONE); //guardada al momento de seleccionar cantidad de estrellas.
+            //this.valoracion.setNota(BigInteger.ONE); //guardada al momento de seleccionar cantidad de estrellas.
             
             punto.setValoracionIdvaloracion(valoracion);
             this.valoracion.setPunto(punto);
@@ -294,7 +294,10 @@ public class HomeBean implements Serializable {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error generando valoración.", "Error grave generando valoración.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("growl", message);
+        } finally  {
+            this.valoracion = new Valoracion();
         }
+        
     }
 
     public void filterList() {
