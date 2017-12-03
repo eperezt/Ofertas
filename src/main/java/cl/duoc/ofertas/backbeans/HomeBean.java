@@ -272,19 +272,19 @@ public class HomeBean implements Serializable {
     public void valorizar() {
         try {
             Punto punto = new Punto();
-            punto.setIdpunto(BigDecimal.ZERO);
+            //punto.setIdpunto(BigDecimal.ZERO); //creado en inserción.
             punto.setCantidad(new BigInteger("10"));
             punto.setFecha(Date.from(Instant.now()));
             punto.setIscobrado(BigInteger.ZERO);
             punto.setUsuarioIdusuario(loginBean.getUsuarioSesionado());
             
-            this.valoracion.setIdvaloracion(BigDecimal.ZERO);
+            //this.valoracion.setIdvaloracion(BigDecimal.ZERO); //creado en inserción.
             this.valoracion.setDetalle("Valoracion de oferta.");
             this.valoracion.setFechacreacion(Date.from(Instant.now()));
             this.valoracion.setUsuarioIdusuario(loginBean.getUsuarioSesionado());
             this.valoracion.setOfertaIdoferta(this.ofertaSeleccionada);
-            //this.valoracion.setFotografia(event.getFile().getContents()); guardada al momento de escoger la imagen.
-            //this.valoracion.setNota(BigInteger.ONE); guardada al momento de seleccionar cantidad de estrellas.
+            //this.valoracion.setFotografia(event.getFile().getContents()); //guardada al momento de escoger la imagen.
+//            this.valoracion.setNota(BigInteger.ONE); //guardada al momento de seleccionar cantidad de estrellas.
             
             punto.setValoracionIdvaloracion(valoracion);
             this.valoracion.setPunto(punto);
