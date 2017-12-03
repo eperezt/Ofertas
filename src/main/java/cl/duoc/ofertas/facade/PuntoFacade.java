@@ -46,11 +46,11 @@ public class PuntoFacade extends AbstractFacade<Punto> implements PuntoFacadeLoc
                 listaPuntos.add(punto);
             }
             if (listaPuntos.isEmpty()) {
-                throw new Exception("No hay ofertas disponibles.");
+                throw new Exception("No hay puntos registrados.");
             }
         } catch (Exception e) {
-            logger.error("Error obteniendo ofertas." + e.getMessage(), e);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error obteniendo ofertas.", "Error grave obteniendo ofertas.");
+            logger.error("Error obteniendo puntos." + e.getMessage(), e);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error obteniendo ofertas.", "Error grave obteniendo puntos.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("growl", message);
         }
@@ -65,8 +65,8 @@ public class PuntoFacade extends AbstractFacade<Punto> implements PuntoFacadeLoc
             em.persist(punto);
             em.getTransaction().commit();
         } catch (Exception e) {
-            logger.error("Error obteniendo ofertas." + e.getMessage(), e);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error obteniendo ofertas.", "Error grave obteniendo ofertas.");
+            logger.error("Error insertando puntos." + e.getMessage(), e);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error insertando puntos.", "Error grave insertando puntos.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("growl", message);
         }

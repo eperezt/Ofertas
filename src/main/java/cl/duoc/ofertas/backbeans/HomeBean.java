@@ -29,7 +29,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import org.apache.log4j.Logger;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RateEvent;
@@ -62,6 +61,7 @@ public class HomeBean implements Serializable {
     private final static Logger logger = Logger.getLogger(HomeBean.class);
     private String empresaSeleccionada;
     private String rubroSeleccionado;
+    private Oferta ofertaSeleccionada;
     private List<String> listaEmpresas;
     private List<String> listaRubros;
     private List<Oferta> listaOfertas;
@@ -163,6 +163,14 @@ public class HomeBean implements Serializable {
         this.loginBean = loginBean;
     }
 
+    public Oferta getOfertaSeleccionada() {
+        return ofertaSeleccionada;
+    }
+
+    public void setOfertaSeleccionada(Oferta ofertaSeleccionada) {
+        this.ofertaSeleccionada = ofertaSeleccionada;
+    }
+    
     public void ordenarSegunValoracion() {
 
     }
@@ -256,42 +264,39 @@ public class HomeBean implements Serializable {
     }
 
     public void handleFileUpload(FileUploadEvent event) {
+        this.valoracion.setFotografia(event.getFile().getContents()); 
         FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
-    public void valorizar(Oferta ofertaValorizada) {
-        if (this.file != null) {
-            FacesMessage message = new FacesMessage("Succesful", this.file.getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-            this.valoracion.setDetalle("Valoracion de oferta.");
-            this.valoracion.setFechacreacion(Date.from(Instant.now()));
-            this.valoracion.setFotografia(this.file.getContents());
-            this.valoracion.setUsuarioIdusuario(loginBean.getUsuarioSesionado());
-            this.valoracion.setOfertaIdoferta(ofertaValorizada);
+    public void valorizar() {
+        try {
             Punto punto = new Punto();
+            punto.setIdpunto(BigDecimal.ZERO);
             punto.setCantidad(new BigInteger("10"));
             punto.setFecha(Date.from(Instant.now()));
             punto.setIscobrado(BigInteger.ZERO);
+            punto.setUsuarioIdusuario(loginBean.getUsuarioSesionado());
+            
+            this.valoracion.setIdvaloracion(BigDecimal.ZERO);
+            this.valoracion.setDetalle("Valoracion de oferta.");
+            this.valoracion.setFechacreacion(Date.from(Instant.now()));
+            this.valoracion.setUsuarioIdusuario(loginBean.getUsuarioSesionado());
+            this.valoracion.setOfertaIdoferta(this.ofertaSeleccionada);
+            //this.valoracion.setFotografia(event.getFile().getContents()); guardada al momento de escoger la imagen.
+            //this.valoracion.setNota(BigInteger.ONE); guardada al momento de seleccionar cantidad de estrellas.
+            
+            punto.setValoracionIdvaloracion(valoracion);
+            this.valoracion.setPunto(punto);
             this.valoracionFacade.create(valoracion);
+        } catch (Exception e){
+            logger.error("Error generando valorización." + e.getMessage(), e);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error generando valoración.", "Error grave generando valoración.");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("growl", message);
         }
     }
 
-//    public String calcularPrecioOferta(BigInteger precio, BigDecimal descuento) {
-//        return String.valueOf(precio.intValue() - ((precio.intValue() * descuento.intValue()) / 100));
-//    }
-//    public String checkIntegerBoolean(Oferta oferta) {
-//        String respuesta = "";
-//        try {
-////            respuesta = valor.intValue() == 1 ? "true" : "false";
-//        } catch (Exception e) {
-//            logger.error("Error obteniendo valor." + e.getMessage(), e);
-//            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error obteniendo valor.", "Error grave obteniendo valor.");
-//            FacesContext context = FacesContext.getCurrentInstance();
-//            context.addMessage("growl", message);
-//        }
-//        return respuesta;
-//    }
     public void filterList() {
         List<Oferta> nuevoFiltro = new ArrayList<>();
         listaOfertasFiltradas = listaOfertas;
@@ -299,7 +304,6 @@ public class HomeBean implements Serializable {
             if (filtro.isEmpty()
                     && (this.rubroSeleccionado == null || this.rubroSeleccionado.equals("Todos"))
                     && (this.empresaSeleccionada == null || this.empresaSeleccionada.equals("Todas"))) {
-                //nuevoFiltro = listaOfertas;
                 nuevoFiltro = ofertaFacade.findAllPublicadas();
             } else if (filtro.isEmpty()
                     && (this.rubroSeleccionado != null && !rubroSeleccionado.equals("Todos"))

@@ -12,6 +12,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -45,6 +47,7 @@ public class Punto implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "IDPUNTO")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private BigDecimal idpunto;
     @Column(name = "CANTIDAD")
     private BigInteger cantidad;

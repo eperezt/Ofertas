@@ -93,6 +93,11 @@ and open the template in the editor.
                             <h:outputText value="Desde #{oferta.minimoproductos} a máx. #{oferta.maximoproductos} unidades" />
                             <h:outputText value="Precio normal: #{oferta.productoIdproducto.precio}" />
                             <h:outputText value="Precio oferta: #{homeBean.calcularPrecioOferta(oferta.productoIdproducto.precio, oferta.productoIdproducto.descuento.isporcentaje, oferta.productoIdproducto.descuento.ispreciodirecto, oferta.productoIdproducto.descuento.porcentajedescuento, oferta.productoIdproducto.descuento.preciodescuento)}" />
+                            <h:form>
+                                <p:commandButton oncomplete="PF('dlgValoracion').show()" title="Valoriza esta oferta">
+                                    <f:setPropertyActionListener value="#{oferta}" target="#{homeBean.ofertaSeleccionada}" />
+                                </p:commandButton>
+                            </h:form>
                         </h:panelGrid>
                     </p:panel>
                 </p:dataGrid>
@@ -115,7 +120,7 @@ and open the template in the editor.
                 <br/>
                 <h:form enctype="multipart/form-data">
                     <p:growl id="messages" showDetail="true" />
-                    <p:fileUpload value="#{homeBean.file}" mode="simple" skinSimple="true" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="2000000" label="Selecciona un archivo..."/>
+                    <p:fileUpload fileUploadListener="#{homeBean.handleFileUpload}" mode="advanced" skinSimple="true" auto="true" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="2000000" label="Selecciona un archivo..."/>
                 </h:form>
                 <br/>
                 <h:outputText value="¡Valoriza esta oferta!" style="font-size: 14px"/>
@@ -126,22 +131,17 @@ and open the template in the editor.
                     <p:rating value="#{homeBean.rating}" stars="3" cancel="false" style="height: 2vh">
                         <p:ajax event="rate" listener="#{homeBean.onrate}" update="messages" />
                     </p:rating>
-                    <h:panelGrid columns="2" cellpadding="5">
-
-                    </h:panelGrid>
                 </h:form>
                 <br/>
                 <br/>
                 <h:outputText value="¿Quieres saber cómo funciona?" style="text-align: center;font-size: 14px"/>
                 <br/>
                 <br/>
-                <h:outputText value="Haz click aquí" style="text-align: center;font-size: 14px"/>
-                <br/>
-                <br/>
-
-
+                <h:outputText value="Haz click aquí" style="text-align: center;font-size: 14px"/><br/><br/>
                 <p:commandButton value="Cancelar" type="button" onclick="PF('dlgValoracion').hide();" id="btnCancelarValoracion"/>
-                <p:commandButton value="¡Valoriza!" id="btnAceptarValoracion" update="growl" actionListener="#{homeBean.valorizar(oferta)}" styleClass="ui-priority-primary" />
+            </h:form>
+            <h:form>
+                <p:commandButton value="¡Valoriza!" ajax="false" actionListener="#{homeBean.valorizar}" id="btnAceptarValoracion"/>
             </h:form>
         </p:dialog>
         <div class="footer"></div>
