@@ -6,7 +6,9 @@
 package cl.duoc.ofertas.backbeans;
 
 import cl.duoc.ofertas.entities.Punto;
+import cl.duoc.ofertas.facade.PuntoFacadeLocal;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -21,7 +23,10 @@ public class PuntosBean {
 
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
-    
+
+    @EJB
+    private PuntoFacadeLocal puntoFacade;
+
     private long puntos;
 
     /**
@@ -31,15 +36,10 @@ public class PuntosBean {
 
     }
 
-    @PostConstruct
-    public void init() {
-        long totalPuntos = 0;
-
-        for (Punto p : loginBean.getUsuarioSesionado().getPuntoList()) {
-            totalPuntos += p.getCantidad().longValue();
-        }
-        
-        puntos = totalPuntos;
+    public void obtenerPuntos() {
+        this.puntoFacade.findAllByUsuario(loginBean.getUsuarioSesionado().getIdusuario().toBigInteger()).forEach((p) -> {
+            this.puntos += p.getCantidad().longValue();
+        });
     }
 
     public void setLoginBean(LoginBean loginBean) {
@@ -52,5 +52,18 @@ public class PuntosBean {
 
     public void setPuntos(long puntos) {
         this.puntos = puntos;
+    }
+
+    @PostConstruct
+    public void init() {
+        this.puntos = 0;
+        
+        obtenerPuntos();
+
+//        for (Punto p : loginBean.getUsuarioSesionado().getPuntoList()) {
+//            totalPuntos += p.getCantidad().longValue();
+//        }
+//        
+//        puntos = totalPuntos;
     }
 }

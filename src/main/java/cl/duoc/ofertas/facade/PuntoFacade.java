@@ -36,11 +36,11 @@ public class PuntoFacade extends AbstractFacade<Punto> implements PuntoFacadeLoc
 
     @Override
     public List<Punto> findAllByUsuario(BigInteger id) {
-        List<Punto> listaPuntos = null;
+        List<Punto> listaPuntos = new ArrayList<>();
         Query consulta = null;
         try {
-            listaPuntos = new ArrayList<>();
-            consulta = em.createQuery("SELECT p FROM Punto INNER JOIN Usuario u ON u=p.usuarioIdusuario WHERE p.iscobrado=0");
+            consulta = em.createQuery("SELECT p FROM Punto p, Usuario u WHERE u=p.usuarioIdusuario AND p.iscobrado=0 AND u.idusuario = :idusuario", Punto.class);
+            consulta.setParameter("idusuario", id);
             for (Object obj : consulta.getResultList()) {
                 Punto punto = (Punto) obj;
                 listaPuntos.add(punto);
@@ -50,20 +50,17 @@ public class PuntoFacade extends AbstractFacade<Punto> implements PuntoFacadeLoc
             }
         } catch (Exception e) {
             logger.error("Error obteniendo puntos." + e.getMessage(), e);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error obteniendo ofertas.", "Error grave obteniendo puntos.");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error obteniendo puntos de usuario.", "Error grave obteniendo puntos.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("growl", message);
         }
-        return null;
+        return listaPuntos;
     }
 
     @Override
     public void create(Punto punto) {
-        Query consulta;
         try {
-            em.getTransaction().begin();
             em.persist(punto);
-            em.getTransaction().commit();
         } catch (Exception e) {
             logger.error("Error insertando puntos." + e.getMessage(), e);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error insertando puntos.", "Error grave insertando puntos.");

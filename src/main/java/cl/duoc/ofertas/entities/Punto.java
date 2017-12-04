@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Punto.findByIdpunto", query = "SELECT p FROM Punto p WHERE p.idpunto = :idpunto")
     , @NamedQuery(name = "Punto.findByCantidad", query = "SELECT p FROM Punto p WHERE p.cantidad = :cantidad")
     , @NamedQuery(name = "Punto.findByFecha", query = "SELECT p FROM Punto p WHERE p.fecha = :fecha")
-    , @NamedQuery(name = "Punto.findByIscobrado", query = "SELECT p FROM Punto p WHERE p.iscobrado = :iscobrado")})
+    , @NamedQuery(name = "Punto.findByIscobrado", query = "SELECT p FROM Punto p WHERE p.iscobrado = :iscobrado")
+    , @NamedQuery(name = "Punto.findAllByUsuario", query = "SELECT p FROM Punto p, Usuario u WHERE u=p.usuarioIdusuario AND p.iscobrado=0 AND u.idusuario = :idusuario")})
 public class Punto implements Serializable {
 
     private static final long serialVersionUID = 1L;

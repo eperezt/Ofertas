@@ -19,95 +19,99 @@ and open the template in the editor.
         <div class="header">
             <h2>OFERTAS RETAIL</h2>
         </div>
-        <h:form>
-            <p:growl id="messages" showDetail="false"/>
-            <p:menubar>
-                <f:facet name="user">
-                    <h:outputLabel value="Bienvenido"/>
-                </f:facet>
-                <f:facet name="options">
-                    <c:if test="${loginBean.usuarioSesionado.consumidor != null}">
-                        <h:outputText value="Bienvenido(a)! : ${loginBean.usuarioSesionado.consumidor.nombre.trim()} ${loginBean.usuarioSesionado.consumidor.apellidopaterno.trim()}    "/>
-                    </c:if>
-                    <c:if test="${loginBean.usuarioSesionado.trabajador != null}">
-                        <h:outputText value="Bienvenido(a)! : ${loginBean.usuarioSesionado.trabajador.nombre.trim()} ${loginBean.usuarioSesionado.trabajador.apellidopaterno.trim()}    "/>
-                    </c:if>
-                    <p:commandButton value="Cerrar Sesion" icon="ui-icon-extlink" action="#{loginBean.logoutListener}" />
-                </f:facet>
-            </p:menubar>
-        </h:form>
-        <p:layout style="min-width:400px;min-height:800px;">
-            <p:layoutUnit position="west" resizable="false" size="210" minSize="200" maxSize="350">
-                <h:form>  
-                    <p:growl id="messages" showDetail="false"/>
-                    <h2 style="margin-top:20">Menu</h2>
-                    <p:menu>
-                        <p:menuitem value="Lista de ofertas" action="#{homeBean.cambiarPagina('/pages/home/home')}"/>
-                        <p:menuitem value="Tus Puntos" action="#{homeBean.cambiarPagina('/pages/consumidor/puntos')}"/>
-                        <p:menuitem value="Cupón de descuento" action="#{homeBean.cambiarPagina('/pages/consumidor/cuponDescuento')}"/>
-                    </p:menu>
-                </h:form>
-            </p:layoutUnit>
-            <p:layoutUnit position="center">
-                <div class="titulo">
-                    <h2>¡Elije tu Oferta!</h2>
-                </div>
-                <div class="container">
-                    <h:form>
-                        <p:panel id="panel" header="Filtrar ofertas" style="margin-bottom:10px;">
-                            <p:messages id="messages" />
-                            <h:panelGrid columns="7" cellpadding="5">
-                                <h:outputLabel for="somEmpresas" value="Empresa:" />
-                                <h:selectOneMenu id="somEmpresas" value = "#{homeBean.empresaSeleccionada}"> 
-                                    <f:selectItem itemLabel="Todas" itemValue=""/>
-                                    <f:selectItems value="#{homeBean.listaEmpresas}"/>                        
-                                </h:selectOneMenu> 
+        <div id="homeFront">
+            <h:form>
+                <p:growl id="messages" showDetail="false"/>
+                <p:menubar>
+                    <f:facet name="user">
+                        <h:outputLabel value="Bienvenido"/>
+                    </f:facet>
+                    <f:facet name="options">
+                        <c:if test="${loginBean.usuarioSesionado.consumidor != null}">
+                            <h:outputText value="Bienvenido(a)! : ${loginBean.usuarioSesionado.consumidor.nombre.trim()} ${loginBean.usuarioSesionado.consumidor.apellidopaterno.trim()}    "/>
+                        </c:if>
+                        <c:if test="${loginBean.usuarioSesionado.trabajador != null}">
+                            <h:outputText value="Bienvenido(a)! : ${loginBean.usuarioSesionado.trabajador.nombre.trim()} ${loginBean.usuarioSesionado.trabajador.apellidopaterno.trim()}    "/>
+                        </c:if>
+                        <p:commandButton value="Cerrar Sesion" icon="ui-icon-extlink" action="#{loginBean.logoutListener}" />
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+            <p:layout style="min-width:400px;min-height:800px;">
+                <p:layoutUnit position="west" resizable="false" size="210" minSize="200" maxSize="350">
+                    <h:form>  
+                        <p:growl id="messages" showDetail="false"/>
+                        <h2 style="margin-top:20">Menu</h2>
+                        <p:menu>
+                            <p:menuitem value="Lista de ofertas" action="#{homeBean.cambiarPagina('/pages/home/home')}"/>
+                            <p:menuitem value="Tus Puntos" action="#{homeBean.cambiarPagina('/pages/consumidor/puntos')}"/>
+                            <p:menuitem value="Cupón de descuento" action="#{homeBean.cambiarPagina('/pages/consumidor/cuponDescuento')}"/>
+                        </p:menu>
+                    </h:form>
+                </p:layoutUnit>
+                <p:layoutUnit position="center">
+                    <div class="titulo">
+                        <h2>¡Elije tu Oferta!</h2>
+                    </div>
+                    <div class="container">
+                        <h:form>
+                            <p:panel id="panel" header="Filtrar ofertas" style="margin-bottom:10px;">
+                                <p:messages id="messages" />
+                                <h:panelGrid columns="7" cellpadding="5">
+                                    <h:outputLabel for="somEmpresas" value="Empresa:" />
+                                    <h:selectOneMenu id="somEmpresas" value = "#{homeBean.empresaSeleccionada}"> 
+                                        <f:selectItem itemLabel="Todas" itemValue=""/>
+                                        <f:selectItems value="#{homeBean.listaEmpresas}"/>                        
+                                    </h:selectOneMenu> 
 
-                                <h:outputLabel for="somRubros" value="Categoría:" />
-                                <h:selectOneMenu id="somRubros" value = "#{homeBean.rubroSeleccionado}"> 
-                                    <f:selectItem itemLabel="Todos" itemValue=""/>
-                                    <f:selectItems value="#{homeBean.listaRubros}"/>                        
-                                </h:selectOneMenu> 
+                                    <h:outputLabel for="somRubros" value="Categoría:" />
+                                    <h:selectOneMenu id="somRubros" value = "#{homeBean.rubroSeleccionado}"> 
+                                        <f:selectItem itemLabel="Todos" itemValue=""/>
+                                        <f:selectItems value="#{homeBean.listaRubros}"/>                        
+                                    </h:selectOneMenu> 
 
-                                <h:outputLabel for="producto" value="Producto:" />
-                                <p:inputText value="#{homeBean.filtro}">
-                                    <p:ajax event="keyup" update="grid" listener="#{homeBean.filterList()}" />
-                                </p:inputText>
-                                <p:commandButton value="Filtrar" update="grid" actionListener="#{homeBean.filterList()}"/>
+                                    <h:outputLabel for="producto" value="Producto:" />
+                                    <p:inputText value="#{homeBean.filtro}">
+                                        <p:ajax event="keyup" update="grid" listener="#{homeBean.filterList()}" />
+                                    </p:inputText>
+                                    <p:commandButton value="Filtrar" update="grid" actionListener="#{homeBean.filterList()}"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </h:form>
+                    </div>
+                    <p:dataGrid id="grid" var="oferta" value="#{homeBean.listaOfertasFiltradas}" columns="3" layout="grid"
+                                rows="4" paginator="true" style="margin-top:20px" emptyMessage="No existen Ofertas para listar.">
+                        <f:facet name="header">
+                            Ofertas
+                        </f:facet>
+
+                        <p:panel header="#{oferta.productoIdproducto.nombre}" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%" onclick="PF('dlgValoracion').show();">
+                                <p:graphicImage value="#{imageStreamer.image}">
+                                    <f:param name="id" value="#{oferta.idoferta}" />
+                                </p:graphicImage>
+                                <h:outputText value="Hasta el #{oferta.fechafin}" />
+                                <h:outputText value="Desde #{oferta.minimoproductos} a máx. #{oferta.maximoproductos} unidades" />
+                                <h:outputText value="Precio normal: #{oferta.productoIdproducto.precio}" />
+                                <h:outputText value="Precio oferta: #{homeBean.calcularPrecioOferta(oferta.productoIdproducto.precio, oferta.productoIdproducto.descuento.isporcentaje, oferta.productoIdproducto.descuento.ispreciodirecto, oferta.productoIdproducto.descuento.porcentajedescuento, oferta.productoIdproducto.descuento.preciodescuento)}" />
+                                <h:form>
+                                    <p:commandButton oncomplete="PF('dlgValoracion').show()" title="Valoriza esta oferta">
+                                        <f:setPropertyActionListener value="#{oferta}" target="#{homeBean.ofertaSeleccionada}" />
+                                    </p:commandButton>
+                                </h:form>
                             </h:panelGrid>
                         </p:panel>
-                    </h:form>
-                </div>
-                <p:dataGrid id="grid" var="oferta" value="#{homeBean.listaOfertasFiltradas}" columns="3" layout="grid"
-                            rows="4" paginator="true" style="margin-top:20px" emptyMessage="No existen Ofertas para listar.">
-                    <f:facet name="header">
-                        Ofertas
-                    </f:facet>
-
-                    <p:panel header="#{oferta.productoIdproducto.nombre}" style="text-align:center">
-                        <h:panelGrid columns="1" style="width:100%" onclick="PF('dlgValoracion').show();">
-                            <p:graphicImage value="#{imageStreamer.image}">
-                                <f:param name="id" value="#{oferta.idoferta}" />
-                            </p:graphicImage>
-                            <h:outputText value="Hasta el #{oferta.fechafin}" />
-                            <h:outputText value="Desde #{oferta.minimoproductos} a máx. #{oferta.maximoproductos} unidades" />
-                            <h:outputText value="Precio normal: #{oferta.productoIdproducto.precio}" />
-                            <h:outputText value="Precio oferta: #{homeBean.calcularPrecioOferta(oferta.productoIdproducto.precio, oferta.productoIdproducto.descuento.isporcentaje, oferta.productoIdproducto.descuento.ispreciodirecto, oferta.productoIdproducto.descuento.porcentajedescuento, oferta.productoIdproducto.descuento.preciodescuento)}" />
-                            <h:form>
-                                <p:commandButton oncomplete="PF('dlgValoracion').show()" title="Valoriza esta oferta">
-                                    <f:setPropertyActionListener value="#{oferta}" target="#{homeBean.ofertaSeleccionada}" />
-                                </p:commandButton>
-                            </h:form>
-                        </h:panelGrid>
-                    </p:panel>
-                </p:dataGrid>
-            </p:layoutUnit>
-        </p:layout>       
+                    </p:dataGrid>
+                </p:layoutUnit>
+            </p:layout>       
+        </div>
         <p:dialog 
             widgetVar="dlgValoracion" modal="true" 
             width="25%" height="80%" 
-            closeOnEscape="true" maximizable="false" minimizable="false" resizable="false"
-            style="text-align: center">
+            closable="false"
+            closeOnEscape="true" maximizable="false" 
+            minimizable="false" resizable="false"
+            style="text-align: center; position: fixed">
             <h:form>
                 <p:growl id="growl" sticky="true" showDetail="false" life="3000"/>
                 <h:outputText value="¡Valora tu oferta, consigue puntos y obtén cupones de descuento cada mes!" style="text-align: center; font-weight: bold;font-size: 24px"/>
@@ -137,11 +141,64 @@ and open the template in the editor.
                 <h:outputText value="¿Quieres saber cómo funciona?" style="text-align: center;font-size: 14px"/>
                 <br/>
                 <br/>
-                <h:outputText value="Haz click aquí" style="text-align: center;font-size: 14px"/><br/><br/>
-                <p:commandButton value="Cancelar" type="button" onclick="PF('dlgValoracion').hide();" id="btnCancelarValoracion"/>
+                <h:form class="form-signin">
+                    <p:commandLink id="lknRegistro" onclick="PF('dlgInformacion').show();">
+                        <h:outputText value="Haz click aquí" style="text-align: center;font-size: 14px; color:blue"/>
+                    </p:commandLink>
+                </h:form>
+                <br/>
+                <br/>
             </h:form>
             <h:form>
-                <p:commandButton value="¡Valoriza!" ajax="false" actionListener="#{homeBean.valorizar}" id="btnAceptarValoracion"/>
+                <p:commandButton value="Cancelar" type="button" onclick="PF('dlgValoracion').hide();" id="btnCancelarValoracion" style="right:10vh"/>
+                <p:commandButton value="¡Valoriza!" ajax="false" actionListener="#{homeBean.valorizar}" id="btnAceptarValoracion" style="left:10vh"/>
+            </h:form>
+        </p:dialog>
+        <p:dialog 
+            header="Valorización de ofertas"
+            widgetVar="dlgInformacion" modal="true" 
+            width="40%" height="80%" 
+            closeOnEscape="true" maximizable="false" minimizable="false" resizable="false"
+            style="text-align: center; position: fixed">
+            <h:form>
+                <p:growl id="growl" sticky="true" showDetail="false" life="3000"/>
+                <h:outputText value="Para incentivar el uso de nuestro sitio, acumularás 10 puntos para lograr, en forma mensual, 
+                              un cupón con un porcentaje de descuento para compras en nuestras empresas de retail." style="text-align: left!important;font-size: 14px"/><br/>
+                <h:outputText value="¡Puedes descargar este cupón, imprimirlo y presentarlo en cualquiera de nuestras tiendas!" style="text-align: center;font-size: 14px"/>
+                <br/>
+                <br/>
+                <h:outputText value="Porcentaje de descuento" style="left: 1vh;font-size: 14px"/>
+                <br/>
+                <br/>
+                <br/>
+                <table align="center">
+                    <thead>
+                        <th>Puntos</th>
+                        <th>Descuento</th>
+                        <th>Tope</th>
+                        <th>Rubro</th>
+                    </thead>
+                    <tr>
+                        <td>0-100</td>
+                        <td>5%</td>
+                        <td>100000</td>
+                        <td>Alimentos</td>
+                    </tr>
+                    <tr>
+                        <td>101-500</td>
+                        <td>10%</td>
+                        <td>150000</td>
+                        <td>Alimentos, Electrónica y Línea Blanca</td>
+                    </tr>
+                    <tr>
+                        <td>500-1000</td>
+                        <td>15%</td>
+                        <td>300000</td>
+                        <td>Alimentos, Electrónica, Línea Blanca, Ropa</td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
             </h:form>
         </p:dialog>
         <div class="footer"></div>

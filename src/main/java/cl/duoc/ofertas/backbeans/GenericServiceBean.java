@@ -7,6 +7,7 @@ package cl.duoc.ofertas.backbeans;
 
 import cl.duoc.ofertas.entities.Ciudad;
 import cl.duoc.ofertas.facade.CiudadFacadeLocal;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -19,29 +20,36 @@ import javax.faces.bean.ManagedBean;
  * @author Esteban Perez
  */
 //@Named(value = "genericServiceBean")
-@ManagedBean(name="genericServiceBean")
+@ManagedBean(name = "genericServiceBean")
 @ApplicationScoped
-public class GenericServiceBean implements Serializable{
+public class GenericServiceBean implements Serializable {
 
     @EJB
     private CiudadFacadeLocal ciudadFacade;
 
     private List<Ciudad> listaCiudades;
-    
-    
+
     /**
      * Creates a new instance of GenericServiceBean
      */
     public GenericServiceBean() {
-        
+
     }
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         this.listaCiudades = ciudadFacade.getCiudadesActivas();
     }
 
     public List<Ciudad> getListaCiudades() {
         return listaCiudades;
+    }
+
+    public String cambiarPagina(String param) throws IOException {
+        if (param.contains("home")) {
+        } else if (param.contains("puntos")) {
+
+        }
+        return param + "?faces-redirect=true";
     }
 }

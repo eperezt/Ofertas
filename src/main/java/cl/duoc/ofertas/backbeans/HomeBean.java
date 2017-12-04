@@ -54,7 +54,7 @@ public class HomeBean implements Serializable {
 
     @EJB
     private ValoracionFacadeLocal valoracionFacade;
-    
+
     @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
 
@@ -170,7 +170,7 @@ public class HomeBean implements Serializable {
     public void setOfertaSeleccionada(Oferta ofertaSeleccionada) {
         this.ofertaSeleccionada = ofertaSeleccionada;
     }
-    
+
     public void ordenarSegunValoracion() {
 
     }
@@ -264,7 +264,7 @@ public class HomeBean implements Serializable {
     }
 
     public void handleFileUpload(FileUploadEvent event) {
-        this.valoracion.setFotografia(event.getFile().getContents()); 
+        this.valoracion.setFotografia(event.getFile().getContents());
         FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
@@ -277,7 +277,7 @@ public class HomeBean implements Serializable {
             punto.setFecha(Date.from(Instant.now()));
             punto.setIscobrado(BigInteger.ZERO);
             punto.setUsuarioIdusuario(loginBean.getUsuarioSesionado());
-            
+
             //this.valoracion.setIdvaloracion(BigDecimal.ZERO); //creado en inserción.
             this.valoracion.setDetalle("Valoracion de oferta.");
             this.valoracion.setFechacreacion(Date.from(Instant.now()));
@@ -285,19 +285,21 @@ public class HomeBean implements Serializable {
             this.valoracion.setOfertaIdoferta(this.ofertaSeleccionada);
             //this.valoracion.setFotografia(event.getFile().getContents()); //guardada al momento de escoger la imagen.
             //this.valoracion.setNota(BigInteger.ONE); //guardada al momento de seleccionar cantidad de estrellas.
-            
+
             punto.setValoracionIdvaloracion(valoracion);
             this.valoracion.setPunto(punto);
             this.valoracionFacade.create(valoracion);
-        } catch (Exception e){
+        } catch (Exception e) {
             logger.error("Error generando valorización." + e.getMessage(), e);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error generando valoración.", "Error grave generando valoración.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("growl", message);
-        } finally  {
+        } finally {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Gracias por valorar nuestra oferta de " + this.valoracion.getOfertaIdoferta().getProductoIdproducto().getNombre() + ".", "Has acumulado " + this.valoracion.getPunto().getCantidad() + " puntos.");
+            FacesContext.getCurrentInstance().addMessage("Gracias por valorar esta oferta.", message);
             this.valoracion = new Valoracion();
         }
-        
+
     }
 
     public void filterList() {
