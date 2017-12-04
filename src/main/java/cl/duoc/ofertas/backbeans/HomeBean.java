@@ -30,6 +30,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RateEvent;
 import org.primefaces.model.UploadedFile;
@@ -289,14 +290,20 @@ public class HomeBean implements Serializable {
             punto.setValoracionIdvaloracion(valoracion);
             this.valoracion.setPunto(punto);
             this.valoracionFacade.create(valoracion);
+
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso",
+                    "Gracias por valorar nuestra oferta de " + this.valoracion.getOfertaIdoferta().getProductoIdproducto().getNombre() + " ¡" +
+                    "Has acumulado " + this.valoracion.getPunto().getCantidad() + " puntos para tu cipón de descuento!");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+//            FacesContext.getCurrentInstance().addMessage(null, message);
         } catch (Exception e) {
             logger.error("Error generando valorización." + e.getMessage(), e);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Se ha encontrado un error generando valoración.", "Error grave generando valoración.");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("growl", message);
         } finally {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Gracias por valorar nuestra oferta de " + this.valoracion.getOfertaIdoferta().getProductoIdproducto().getNombre() + ".", "Has acumulado " + this.valoracion.getPunto().getCantidad() + " puntos.");
-            FacesContext.getCurrentInstance().addMessage("Gracias por valorar esta oferta.", message);
+//            FacesContext.getCurrentInstance().getMessages(
+//            FacesContext.getCurrentInstance().getMessages().next().setDetail("Has acumulado " + this.valoracion.getPunto().getCantidad() + " puntos.");
             this.valoracion = new Valoracion();
         }
 
