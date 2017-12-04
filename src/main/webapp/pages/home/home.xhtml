@@ -50,13 +50,13 @@ and open the template in the editor.
                     </h:form>
                 </p:layoutUnit>
                 <p:layoutUnit position="center">
-                    <div class="titulo">
+                    <div class="titulo" id="titulo">
                         <h2>¡Elije tu Oferta!</h2>
+                        <p:messages id="messages"/>
                     </div>
                     <div class="container">
                         <h:form>
                             <p:panel id="panel" header="Filtrar ofertas" style="margin-bottom:10px;">
-                                <p:messages id="messages" />
                                 <h:panelGrid columns="7" cellpadding="5">
                                     <h:outputLabel for="somEmpresas" value="Empresa:" />
                                     <h:selectOneMenu id="somEmpresas" value = "#{homeBean.empresaSeleccionada}"> 
