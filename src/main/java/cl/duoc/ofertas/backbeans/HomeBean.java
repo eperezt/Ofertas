@@ -293,7 +293,7 @@ public class HomeBean implements Serializable {
 
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso",
                     "Gracias por valorar nuestra oferta de " + this.valoracion.getOfertaIdoferta().getProductoIdproducto().getNombre() + " ¡" +
-                    "Has acumulado " + this.valoracion.getPunto().getCantidad() + " puntos para tu cipón de descuento!");
+                    "Has acumulado " + this.valoracion.getPunto().getCantidad() + " puntos para tu cupón de descuento!");
             RequestContext.getCurrentInstance().showMessageInDialog(message);
 //            FacesContext.getCurrentInstance().addMessage(null, message);
         } catch (Exception e) {
